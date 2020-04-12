@@ -11,13 +11,16 @@
  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
  <title>Login Page</title>
-
 </head>
 
 <body>
 <div class="container">
 	<div class="d-flex justify-content-center h-100">
 		<div class="card">
+		 <%String ErrorMes = (String)request.getAttribute("ErrorMes");  %>
+         <%if(ErrorMes != null) {%>
+            <span style="color:red;"><%= ErrorMes %></span>
+         <%}%>
 			<div class="card-header">
 				<h3>Sign In</h3>
 				<div class="d-flex justify-content-end social_icon">
