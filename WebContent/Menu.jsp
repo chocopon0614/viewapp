@@ -13,7 +13,7 @@
 	<label for="menu-toggle"></label>
 	<ul id="menu">
 		<li><a href="#">Home</a></li>
-		<li><a href="#">Connect to Apps</a></li>
+		<li><a href="https://api.us-south.apiconnect.appdomain.cloud/chocopon0899gmailcom-dev/sb/oauthprovider/oauth2/authorize?response_type=code&scope=scope1&client_id=a643943f-fd85-4801-9bd4-6c79d3e1d3c2">Connect to App</a></li>
 	</ul>
 	<aside>
 	<h1>Welcome!</h1>
