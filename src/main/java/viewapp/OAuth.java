@@ -1,4 +1,4 @@
-package ViewApp;
+package viewapp;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;

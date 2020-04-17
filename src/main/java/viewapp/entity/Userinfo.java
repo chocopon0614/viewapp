@@ -1,4 +1,4 @@
-package ViewApp.entity;
+package viewapp.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;

@@ -1,4 +1,4 @@
-package ViewApp;
+package viewapp;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ViewApp.entity.Userinfo;
+import viewapp.entity.Userinfo;
 
 /**
  * Servlet implementation class Login
