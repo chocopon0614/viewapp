@@ -61,12 +61,12 @@ public class Login extends HttpServlet {
 				this.getServletContext().getRequestDispatcher("/Menu.jsp").forward(request, response);
 				
 			} else {
-				request.setAttribute("ErrorMes", "Password Error");
+				request.setAttribute("ResMessage", "Password Error");
 				this.getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
 			}
 				
 		}else {
-			request.setAttribute("ErrorMes", "Username Error");
+			request.setAttribute("ResMessage", "Username Error");
 			this.getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
 		}
 	}
