@@ -18,7 +18,11 @@ function dataArray(str) {
 }
 
 function drawChart(data) {
-	
+
+	alert(data);
+	alert('!EWEW');
+
+
 	  var tmp = dataArray(data); 
       var tmpLabels = [], tmpData1 = [], tmpData2 = [], tmpData3 = [];
 	  
@@ -85,3 +89,9 @@ const loadCharts_bar = function (labels, d1) {
 	  document.getElementById('chart-area2').appendChild(ctx);
 	  new Chart(ctx, chartDataSet);
 	};
+	
+
+	window.onload = function () {
+		var listdata = JSON.parse('[{"Registration time":"23/12/2012 09:00:23","Height":181.0,"Weight":72.0}]');
+		drawChart(listdata)
+		};

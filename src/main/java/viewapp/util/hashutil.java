@@ -3,7 +3,7 @@ package viewapp.util;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 
-public class Hashutil {
+public class hashutil {
 
     public static String getSHA256(String input){
 
