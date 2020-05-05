@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import viewapp.entity.Userinfo;
+import viewapp.entity.userinfo;
 
 /**
  * Servlet implementation class Register
@@ -53,7 +53,7 @@ public class Register extends HttpServlet {
 	      tx = em.getTransaction();
 	      tx.begin();
 
-	      Userinfo userinfo = new Userinfo();
+	      userinfo userinfo = new userinfo();
 	      userinfo.setUsername(UserName);
 	      userinfo.setPassword(PassWord);
 	      userinfo.setCreateTime(new Timestamp(System.currentTimeMillis()));
