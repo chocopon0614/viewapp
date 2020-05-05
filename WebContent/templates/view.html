@@ -1,4 +1,4 @@
-<!-- 	<div class="container">
+<div class="container">
 		<div class="row">
 			<div class="col-xl-3">
 				<h1>Hello!</h1>
@@ -7,18 +7,27 @@
 		</div>
 		<br/>
 		<div class="row">
-			<div class="col-xl-12">
-				<div id="chart-area1"></div>
+			<div class="col-xl-6">
+              <canvas id="base" class="chart chart-line"
+                 chart-data="data" chart-labels="labels"
+                 chart-dataset-override="datasetOverride" >
+              </canvas> 			
 			</div>
+			<div class="col-xl-6">
+              <canvas id="base2" class="chart chart-line"
+                 chart-data="data2" chart-labels="labels2"
+                 chart-dataset-override="datasetOverride2" >
+              </canvas> 			
+           </div>
 		</div>
 		<br/>
 		<div class="row">
 			<div class="col-xl-12">
-				<div id="chart-area2"></div>
+              <canvas id="base3" class="chart-bar"
+                 chart-data="data3" chart-labels="labels3" chart-colors="colors3"
+                 chart-dataset-override="datasetOverride3" >
+              </canvas> 			
 			</div>
 		</div>
-	</div>
- -->
- 
-<canvas class="chart chart-line" chart-data="data" chart-labels="labels" 
-	chart-series="series" chart-click="onClick"></canvas> 
+		<br/>
+</div>

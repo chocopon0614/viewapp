@@ -51,28 +51,73 @@ ViewApp.controller('LoginController', ['$scope', '$http', '$location', '$httpPar
 
 
 
-ViewApp.controller('ViewController', ['$scope', function($scope){
-	
+ViewApp.controller('ViewController', ['$scope', '$http', '$location', '$httpParamSerializerJQLike', 
+	function($scope, $http, $location, $httpParamSerializerJQLike){
 
-	  $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-	  $scope.series = ['Series A', 'Series B'];
-	  $scope.data = [
-	    [65, 59, 80, 81, 56, 55, 40],
-	    [28, 48, 40, 19, 86, 27, 90]
-	  ];
-	  $scope.onClick = function (points, evt) {
-	    console.log(points, evt);
-	  };
-	  
-//	  // Simulate async data update
-//	  $timeout(function () {
-//	    $scope.data = [
-//	      [28, 48, 40, 19, 86, 27, 90],
-//	      [65, 59, 80, 81, 56, 55, 40]
-//	    ];
-//	  }, 3000);
-	  
+	  var method = "POST";	
+	  var url = 'api/resources/token';	
 
+	  var clientid = 'a643943f-fd85-4801-9bd4-6c79d3e1d3c2';
+	  var authcode =$location.search()["code"];
+	  
+	  $http({
+          method: method,
+          headers : {
+              'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8'
+          },
+          transformRequest: $httpParamSerializerJQLike,
+          url: url,
+          data: { clientid: clientid, authcode: authcode}
+        }).then(function successCallback(response){
+
+        	resdata = response.data;
+	      	var tmp = dataArray(resdata); 
+	  	    var tmpLabels = [], tmpData1 = [], tmpData2 = [], tmpData3 = [];
+	  	    
+			for (var row in tmp){
+			   tmpLabels.push(tmp[row][0]);
+			   tmpData1.push(tmp[row][1])
+			   tmpData2.push(tmp[row][2])
+				     
+			   var bmi = tmp[row][2]/((tmp[row][1]/100)*(tmp[row][1]/100));
+			   var bmi = Math.round(bmi*100)/100;
+			   tmpData3.push(bmi)
+
+		    }
+
+		  $scope.labels = tmpLabels;
+	      $scope.data = [tmpData1];
+	      
+	      $scope.datasetOverride = [{
+	    	  label: "Height",
+	          borderWidth: 3,
+	          backgroundColor: 'rgba(60, 160, 220, 0.3)',
+	          borderColor: 'rgba(60, 160, 220, 0.8)'
+	       }];
+	      
+		  $scope.labels2 = tmpLabels;
+	      $scope.data2 = [tmpData2];
+	      $scope.datasetOverride2 = [{
+	    	  label: "Weight",
+	          borderWidth: 3,
+	          backgroundColor: 'rgba(60, 190, 20, 0.3)',
+	          borderColor: 'rgba(60, 190, 20, 0.8)'
+           }];
+
+	      
+	      $scope.colors3 = ['#ff6384'];
+	      $scope.labels3 = tmpLabels;
+	      $scope.data3 = [tmpData3];
+	      
+	      $scope.datasetOverride3 = [{
+	    	  label: "BMI",
+	          borderWidth: 1,
+	          type: 'bar'
+	       }];
+	      
+     })  
+
+	  
 	function dataArray(str) {
 		var tmpResult = [];
 
@@ -91,102 +136,5 @@ ViewApp.controller('ViewController', ['$scope', function($scope){
 		 return tmpResult;
 		
 	}
-
-	function drawChart(data) {
-
-		  var tmp = dataArray(data); 
-	      var tmpLabels = [], tmpData1 = [], tmpData2 = [], tmpData3 = [];
-		  
-		  for (var row in tmp){
-			 tmpLabels.push(tmp[row][0]);
-		     tmpData1.push(tmp[row][1])
-		     tmpData2.push(tmp[row][2])
-		     
-		     var bmi = tmp[row][2]/((tmp[row][1]/100)*(tmp[row][1]/100));
-		     var bmi = Math.round(bmi*100)/100;
-		     tmpData3.push(bmi)
-
-		  }
-		  
-		loadCharts_line(tmpLabels, tmpData1, tmpData2);
-		loadCharts_bar(tmpLabels, tmpData3);
-		
-	}
-
-	const loadCharts_line = function (labels, d1, d2) {
-//	  const chartDataSet = {
-//	    type: 'line',
-//	    data: {
-//	      labels: labels,
-//	      datasets: [{
-//	        label: 'Height',
-//	        data: d1,
-//	        backgroundColor: 'rgba(60, 160, 220, 0.3)',
-//	        borderColor: 'rgba(60, 160, 220, 0.8)'
-//	      }, {
-//	        label: 'Weight',
-//	        data: d2,
-//	        backgroundColor: 'rgba(60, 190, 20, 0.3)',
-//	        borderColor: 'rgba(60, 190, 20, 0.8)'
-//	      }]
-//	    },
-//	    options: {
-//	    }
-//	  };
-
-	  
-//	  const ctx = document.createElement('canvas');
-//	  document.getElementById('chart-area1').appendChild(ctx);
-//	  new Chart(ctx, chartDataSet);
-	};
-
-	const loadCharts_bar = function (labels, d1) {
-		  const chartDataSet = {
-		    type: 'bar',
-		    data: {
-		      labels: labels,
-		      datasets: [{
-		        label: 'BMI',
-		        data: d1,
-		        borderWidth: 2,
-		        backgroundColor: 'rgba(233, 200, 27, 0.3)',
-		        borderColor: 'rgba(233, 200, 27, 0.8)'
-		      }]
-		    },
-		    options: {
-		    }
-		  };
-		 
-		  const ctx = document.createElement('canvas');
-		  document.getElementById('chart-area2').appendChild(ctx);
-		  new Chart(ctx, chartDataSet);
-		};
-		
-
-//		var listdata = JSON.parse('[{"Registration time":"23/12/2012 09:00:23","Height":181.0,"Weight":72.0}]');
-//		drawChart(listdata)
-	
-}]);
-	
- 
-ViewApp.controller("LineCtrl", ['$scope', '$timeout', function ($scope, $timeout) {
-
-	  $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-	  $scope.series = ['Series A', 'Series B'];
-	  $scope.data = [
-	    [65, 59, 80, 81, 56, 55, 40],
-	    [28, 48, 40, 19, 86, 27, 90]
-	  ];
-	  $scope.onClick = function (points, evt) {
-	    console.log(points, evt);
-	  };
-	  
-	  // Simulate async data update
-	  $timeout(function () {
-	    $scope.data = [
-	      [28, 48, 40, 19, 86, 27, 90],
-	      [65, 59, 80, 81, 56, 55, 40]
-	    ];
-	  }, 3000);
 
 }]);

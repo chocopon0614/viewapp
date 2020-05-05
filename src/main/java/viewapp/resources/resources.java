@@ -66,9 +66,10 @@ public class resources {
 		}
 	  }
 
-	@GET
+	@POST
 	@Path("/token")
-	public Response oauthreturn(@QueryParam("code") final String authcode) throws Exception {
+	public Response oauthreturn(@FormParam("clientid") final String clientid,
+			@FormParam("authcode") final String authcode) throws Exception {
 		if (!authcode.isEmpty()) {
 			
 			SSLContext sslContext = sslutil.createSSLContext();
@@ -112,10 +113,7 @@ public class resources {
 
 				String res_api = response_api.readEntity(String.class);
 				
-				ResponseBuilder rb = Response.status(Status.FOUND)
-				            .type(MediaType.APPLICATION_JSON_TYPE);
-				
-				rb.header(HttpHeaders.LOCATION, "http://localhost:9080/ViewApp/main.html#/view");
+				ResponseBuilder rb = Response.ok().type(MediaType.APPLICATION_JSON_TYPE);
 				return rb.entity(res_api).build();
 	
 				
@@ -130,5 +128,22 @@ public class resources {
 
 			}
 		}
+	
+	@GET
+	@Path("/code")
+	public Response oauthcode(@QueryParam("code") final String authcode) throws Exception {
+		if (!authcode.isEmpty()) {
+
+			ResponseBuilder rb = Response.status(Status.FOUND);
+			rb.header(HttpHeaders.LOCATION, "http://localhost:9080/ViewApp/main.html#/view?code=" + authcode );
+			return rb.build();
+
+		} else {
+			Response response = Response.status(500).build();
+			return response;
+
+		}
+	}
+
 	
  }
