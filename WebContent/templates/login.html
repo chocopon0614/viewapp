@@ -59,7 +59,7 @@
 							Don't have an account?
 						</span>
 
-						<a href="#" class="txt2" data-toggle="modal" data-target="#modalRegisterForm">
+						<a class="txt2" data-toggle="modal" data-target="#modalRegisterForm">
 							Sign Up
 						</a>
 					</div>
@@ -71,7 +71,6 @@
  <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
-   <form action="./Register" method="post">
     <div class="modal-content">
       <div class="modal-header text-center">
         <h4 class="modal-title w-100 font-weight-bold">Sign up</h4>
@@ -79,44 +78,29 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <div align="center" style="color:red">{{message}}</div>
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <i class="fas fa-user prefix grey-text"></i>
-          <input type="text" name="reg-name" class="form-control validate">
+          <input type="text" name="reg-name" ng-model="name" class="form-control validate">
           <label data-error="wrong" data-success="right" for="orangeForm-name">Your name</label>
         </div>
         <div class="md-form mb-5">
           <i class="fas fa-envelope prefix grey-text"></i>
-          <input type="email" name="reg-email" class="form-control validate">
+          <input type="email" name="reg-email" ng-model ="email" class="form-control validate">
           <label data-error="wrong" data-success="right" for="orangeForm-email">Your email</label>
         </div>
 
         <div class="md-form mb-4">
           <i class="fas fa-lock prefix grey-text"></i>
-          <input type="password" name="reg-pass" class="form-control validate">
+          <input type="password" name="reg-pass"  ng-model="pass" class="form-control validate">
           <label data-error="wrong" data-success="right" for="orangeForm-pass">Your password</label>
         </div>
       </div>
       <div class="modal-footer d-flex justify-content-center">
+       <form ng-submit="register()">
         <button class="btn btn-deep-orange">Sign up</button>
+       </form>
       </div>
-     </form>
     </div>
- </div>
-
-
- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
- <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
- <script src="vendor/animsition/js/animsition.min.js"></script>
- <script src="vendor/bootstrap/js/popper.js"></script>
- <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
- <script src="vendor/select2/select2.min.js"></script>
- <script src="vendor/daterangepicker/moment.min.js"></script>
- <script src="vendor/daterangepicker/daterangepicker.js"></script>
- <script src="vendor/countdowntime/countdowntime.js"></script>
- <script src="js/main.js"></script>
- 
- 
+ </div> 

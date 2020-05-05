@@ -1,11 +1,13 @@
 package viewapp.resources;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
@@ -145,5 +147,43 @@ public class resources {
 		}
 	}
 
+	@POST
+	@Path("/register")
+	public Response register(@FormParam("username") final String username,
+			@FormParam("password") final String password) throws Exception {
+
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("ViewApp");
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = null;
+		
+		try {
+	      tx = em.getTransaction();
+	      tx.begin();
+
+	      userinfo userinfo = new userinfo();
+	      userinfo.setUsername(username);
+	      userinfo.setPassword(password);
+	      userinfo.setCreateTime(new Timestamp(System.currentTimeMillis()));
+	      userinfo.setModifiedTime(new Timestamp(System.currentTimeMillis()));
+
+	      em.persist(userinfo);
+	    
+	      tx.commit();
+
+		  Response response = Response.ok().build();
+		  return response;
+
+		}catch (RuntimeException e) {
+			if ( tx != null && tx.isActive() ) tx.rollback();
+
+			Response response = Response.status(500).build();
+			return response;
+
+			
+		} finally {
+			em.close();
+		}
+		
+	}
 	
  }
