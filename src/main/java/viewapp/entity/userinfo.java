@@ -14,8 +14,8 @@ import javax.persistence.NamedQuery;
  * 
  */
 @Entity
-@NamedQuery(name="Userinfo.findbyusername", query="SELECT u FROM Userinfo u where u.username =?1")
-public class Userinfo implements Serializable {
+@NamedQuery(name="userinfo.findbyusername", query="SELECT u FROM userinfo u where u.username =?1")
+public class userinfo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -33,7 +33,7 @@ public class Userinfo implements Serializable {
 
 	private String username;
 
-	public Userinfo() {
+	public userinfo() {
 	}
 
 	public int getId() {
