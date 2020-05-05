@@ -20,12 +20,9 @@ ViewApp.config(['$routeProvider', function($routeProvider){
 
 
 
-ViewApp.controller('LoginController', ['$scope', '$http', '$location', '$httpParamSerializerJQLike',
-	 function($scope, $http, $location, $httpParamSerializerJQLike){
+ViewApp.controller('LoginController', ['$scope', '$http', '$location', '$window','$route','$httpParamSerializerJQLike',
+	 function($scope, $http, $location, $httpParamSerializerJQLike, $window, $route){
 	
-    	$scope.username = '';
-    	$scope.password = '';
-    	
     	$scope.submit = function(){
     	  var method = "POST";	
     	  var url = 'api/resources/login';	
@@ -47,6 +44,30 @@ ViewApp.controller('LoginController', ['$scope', '$http', '$location', '$httpPar
     	        .error(function(data, status, headers, config){
     	        });
     	};
+    	
+    	$scope.register = function(){
+      	  var method = "POST";	
+      	  var url = 'api/resources/register';	
+      		
+      	  $http({
+      	          method: method,
+      	          headers : {
+                        'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8'
+                    },
+                    transformRequest: $httpParamSerializerJQLike,
+      	          url: url,
+      	          data: { username: $scope.name, password: $scope.pass }
+      	        })
+
+      	        .success(function(data, status, headers, config){
+      	        	$scope.message = 'Registerd your new ID. Please login.';
+      	        })
+      	        
+      	        .error(function(data, status, headers, config){
+      	        	$scope.message = 'Error occurred. Please check your input.';
+      	        });
+      	};
+
     }]);
 
 
