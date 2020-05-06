@@ -20,8 +20,8 @@ ViewApp.config(['$routeProvider', function($routeProvider){
 
 
 
-ViewApp.controller('LoginController', ['$scope', '$http', '$location', '$window','$route','$httpParamSerializerJQLike',
-	 function($scope, $http, $location, $httpParamSerializerJQLike, $window, $route){
+ViewApp.controller('LoginController', ['$scope', '$http', '$location','$httpParamSerializerJQLike',
+	 function($scope, $http, $location, $httpParamSerializerJQLike){
 	
     	$scope.submit = function(){
     	  var method = "POST";	
@@ -35,14 +35,11 @@ ViewApp.controller('LoginController', ['$scope', '$http', '$location', '$window'
                   transformRequest: $httpParamSerializerJQLike,
     	          url: url,
     	          data: { username: $scope.username, password: $scope.password }
-    	        })
-
-    	        .success(function(data, status, headers, config){
+    	        }).then(function successCallback(response){
     	        	$location.path('/menu');
-    	        })
-    	        
-    	        .error(function(data, status, headers, config){
-    	        });
+    	        }, function errorCallback(response) {
+    	            console.log(response);
+    	      });
     	};
     	
     	$scope.register = function(){
@@ -56,14 +53,10 @@ ViewApp.controller('LoginController', ['$scope', '$http', '$location', '$window'
                     },
                     transformRequest: $httpParamSerializerJQLike,
       	          url: url,
-      	          data: { username: $scope.name, password: $scope.pass }
-      	        })
-
-      	        .success(function(data, status, headers, config){
+      	          data: { username: $scope.md-username, password: $scope.md-password }
+      	        }).then(function successCallback(response){
       	        	$scope.message = 'Registerd your new ID. Please login.';
-      	        })
-      	        
-      	        .error(function(data, status, headers, config){
+      	        }, function errorCallback(response) {
       	        	$scope.message = 'Error occurred. Please check your input.';
       	        });
       	};
