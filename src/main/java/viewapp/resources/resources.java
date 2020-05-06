@@ -30,6 +30,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import viewapp.entity.userinfo;
+import viewapp.util.hashutil;
 import viewapp.util.sslutil;
 
 @Path("/resources")
@@ -151,6 +152,8 @@ public class resources {
 	@Path("/register")
 	public Response register(@FormParam("username") final String username,
 			@FormParam("password") final String password) throws Exception {
+		
+		String hash_password = hashutil.getSHA256(password);
 
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("ViewApp");
 		EntityManager em = emf.createEntityManager();
@@ -162,7 +165,7 @@ public class resources {
 
 	      userinfo userinfo = new userinfo();
 	      userinfo.setUsername(username);
-	      userinfo.setPassword(password);
+	      userinfo.setPassword(hash_password);
 	      userinfo.setCreateTime(new Timestamp(System.currentTimeMillis()));
 	      userinfo.setModifiedTime(new Timestamp(System.currentTimeMillis()));
 
