@@ -3,8 +3,7 @@ var ViewApp = angular.module('ViewApp', ['ngRoute', 'chart.js']);
 ViewApp.config(['$routeProvider', function($routeProvider){
     $routeProvider
     .when('/', {
-      templateUrl: 'templates/login.html',
-      controller: 'LoginController'
+      templateUrl: 'templates/menu.html'
     })
     .when('/menu', {
       templateUrl: 'templates/menu.html'
@@ -15,11 +14,11 @@ ViewApp.config(['$routeProvider', function($routeProvider){
     })
     .when('/linechart', {
       templateUrl: 'templates/linechart.html',
-      controller: 'ViewController'
+      controller: 'LineController'
     })
     .when('/barchart', {
       templateUrl: 'templates/barchart.html',
-      controller: 'ViewController'
+      controller: 'BarController'
     })
     .otherwise({
       redirectTo: '/'
@@ -28,8 +27,8 @@ ViewApp.config(['$routeProvider', function($routeProvider){
 
 
 
-ViewApp.controller('LoginController', ['$scope', '$http', '$location','$httpParamSerializerJQLike',
-	 function($scope, $http, $location, $httpParamSerializerJQLike){
+ViewApp.controller('LoginController', ['$scope', '$http', '$window','$httpParamSerializerJQLike',
+	 function($scope, $http, $window, $httpParamSerializerJQLike){
 	   $scope.username = null;
 	   $scope.mdusername = null;
 	   $scope.mdemail = null;
@@ -47,7 +46,7 @@ ViewApp.controller('LoginController', ['$scope', '$http', '$location','$httpPara
     	          url: url,
     	          data: { username: $scope.username, password: $scope.password }
     	        }).then(function successCallback(response){
-    	        	$location.path('/menu');
+    	        	$window.location.href = 'main.html';
     	        }, function errorCallback(response) {
     	            console.log(response);
     	      });
@@ -103,7 +102,7 @@ ViewApp.controller('ConnectController', ['$http', '$location','$httpParamSeriali
 
 
 
-ViewApp.controller('ViewController', ['$scope', '$http', '$location', '$httpParamSerializerJQLike', 
+ViewApp.controller('LineController', ['$scope', '$http', '$location', '$httpParamSerializerJQLike', 
 	function($scope, $http, $location, $httpParamSerializerJQLike){
 
 	  var method = "POST";	
@@ -215,7 +214,25 @@ ViewApp.controller('ViewController', ['$scope', '$http', '$location', '$httpPara
 			      
 		      })
 		 };
-		 
+	  	  
+}]);
+
+ViewApp.controller('BarController', ['$scope', '$http', '$location', '$httpParamSerializerJQLike', 
+	function($scope, $http, $location, $httpParamSerializerJQLike){
+
+	  var method = "POST";	
+	  var url = 'api/resources/resourse';	
+
+	  var clientid = 'a643943f-fd85-4801-9bd4-6c79d3e1d3c2';
+	  var token = localStorage.getItem('access_token');
+
+	  getinfo3(clientid, token);
+	  
+	  $scope.renew3 = function(){
+		  getinfo3(clientid, token);
+	  };
+
+
 	function getinfo3(clientid, token){
 			  
 				$http({
@@ -243,6 +260,24 @@ ViewApp.controller('ViewController', ['$scope', '$http', '$location', '$httpPara
 				          borderWidth: 1,
 				          type: 'bar'
 				    }];
+				    
+				     $scope.options3 = {
+				    	      scales: {
+				    	        xAxes: [
+				    	          {
+				    	           ticks: {
+				    	              autoSkip: true,
+				    	              maxTicksLimit: 10
+				    	               }
+				    	          }
+				    	        ]
+				    	      }
+				    };
+
+				    
+				    var date = new Date();
+				    $scope.time3 = date.toLocaleString('en-GB');
+
 				      
 			  })
 	  };

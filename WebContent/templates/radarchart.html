@@ -8,30 +8,29 @@
           <div class="row">
     
             <!--Grid column-->
-            <div class="col-md-4 mb-4 mb-md-0">
+             <div class="col-md-2 mb-4 mb-md-0">
     
-              <h3 class="font-weight-bold">Line chart</h3>
+              <p class="text-muted">Updated at </br> {{time3}}</p>
     
-              <p class="text-muted">Please renew below.</p>
-    
-              <a class="btn btn-purple btn-md ml-0" href="https://api.us-south.apiconnect.appdomain.cloud/chocopon0899gmailcom-dev/sb/oauthprovider/oauth2/authorize?response_type=code&scope=scope1&client_id=a643943f-fd85-4801-9bd4-6c79d3e1d3c2"
-               role="button">Connect now<i class="fa fa-gem ml-2"></i></a>
+              <a class="btn btn-pink btn-md ml-0" role="button" ng-click="renew3()">Renew<i class="fa fa-external-link-alt ml-2"></i></a>
 
+    
+             </div>
+            <!--Grid column-->
+    
+            <!--Grid column-->
+             <div class="col-md-10 mb-4 mb-md-0">
+    
+              <!--Image-->
+                 <canvas id="base3" class="chart-bar"
+                   chart-data="data3" chart-labels="labels3" chart-options ="options3"
+                   chart-dataset-override="datasetOverride3" >
+                </canvas> 			
+ 
+             </div>
     
             </div>
             <!--Grid column-->
-    
-            <!--Grid column-->
-            <div class="col-md-8 mb-4 mb-md-0">
-    
-              <!--Image-->
-               </div>
-    
-              </div>
-            <!--Grid column-->
-    
-          </div>
-          <!--Grid row-->
     
     
         </section>

@@ -1,26 +1,3 @@
-<!--Navbar -->
-<nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color">
-  <a class="navbar-brand" href="#!/menu">Menu</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
-    aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-user"></i> Profile </a>
-        <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
-          <a class="dropdown-item" href="#">My account</a>
-          <a class="dropdown-item" href="#">Log out</a>
-        </div>
-      </li>
-    </ul>
-  </div>
-</nav>
-<!--/.Navbar -->
-
 <div class="container my-5 py-5 z-depth-1">
  
  
@@ -31,25 +8,22 @@
           <div class="row">
     
             <!--Grid column-->
-            <div class="col-md-4 mb-4 mb-md-0">
+            <div class="col-md-2 mb-4 mb-md-0">
     
-              <h3 class="font-weight-bold">Bar chart</h3>
+              <p class="text-muted">Updated at </br> {{time3}}</p>
     
-              <p class="text-muted">Please renew below.</p>
-    
-              <a class="btn btn-purple btn-md ml-0" href="https://api.us-south.apiconnect.appdomain.cloud/chocopon0899gmailcom-dev/sb/oauthprovider/oauth2/authorize?response_type=code&scope=scope1&client_id=a643943f-fd85-4801-9bd4-6c79d3e1d3c2"
-               role="button">Connect now<i class="fa fa-gem ml-2"></i></a>
+              <a class="btn btn-pink btn-md ml-0" role="button" ng-click="renew3()">Renew<i class="fa fa-external-link-alt ml-2"></i></a>
 
     
             </div>
             <!--Grid column-->
     
             <!--Grid column-->
-            <div class="col-md-8 mb-4 mb-md-0">
+            <div class="col-md-10 mb-4 mb-md-0">
     
               <!--Image-->
               <canvas id="base3" class="chart-bar"
-                 chart-data="data3" chart-labels="labels3" chart-colors="colors3"
+                 chart-data="data3" chart-labels="labels3" chart-colors="colors3" chart-options ="options3"
                  chart-dataset-override="datasetOverride3">
               </canvas> 			
  
@@ -57,10 +31,6 @@
     
             </div>
             <!--Grid column-->
-    
-          </div>
-          <!--Grid row-->
-    
     
         </section>
         <!--Section: Content-->
