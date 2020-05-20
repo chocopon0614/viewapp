@@ -1,12 +1,103 @@
-<input type="checkbox" id="menu-toggle" />
-<label for="menu-toggle"></label>
-<ul id="menu">
-	<li><a href="#">Home</a></li>
-	<li><a href="https://api.us-south.apiconnect.appdomain.cloud/chocopon0899gmailcom-dev/sb/oauthprovider/oauth2/authorize?response_type=code&scope=scope1&client_id=a643943f-fd85-4801-9bd4-6c79d3e1d3c2">Connect to App</a></li>
-</ul>
-<aside>
-<h1>Welcome!</h1>
-</aside>
-	
-<link rel="stylesheet" type="text/css" href="css/menu.css">
-	
+  <div class="container my-5 py-5 z-depth-1">
+
+
+    <!--Section: Content-->
+    <section class="px-md-5 mx-md-5 text-center dark-grey-text">
+
+      <!--Grid row-->
+      <div class="row d-flex justify-content-center">
+
+        <!--Grid column-->
+        <div class="col-xl-6 col-md-8">
+
+          <h3 class="font-weight-bold">Let's connect to another application.</h3>
+
+          <p class="text-muted">This application can connect to other app with access token.
+            This application get information from app with oauth2.0 schame.
+            Please start from the below button.</p>
+
+          <a class="btn btn-info btn-md ml-0 mb-5" data-toggle="modal" data-target="#basicExampleModal" role="button">Start now<i class="fa fa-magic ml-2"></i></a>
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+
+      <!--Grid row-->
+      <div class="row">
+
+        <!--First column-->
+        <div class="col-lg-3 col-md-6">
+          <a href="#!/linechart"><i class="fas fa-chart-bar fa-3x blue-text"></i></a>
+ 
+          <p class="font-weight-bold my-3">Line chart</p>
+
+          <p class="text-muted">This shows your height and weight records with line charts.</p>
+        </div>
+        <!--/First column-->
+
+        <!--Second column-->
+        <div class="col-lg-3 col-md-6">
+            <a href="#!/barchart"><i class="fas fa-chart-area fa-3x teal-text"></i></a>
+
+            <p class="font-weight-bold my-3">Bar graph</p>
+  
+            <p class="text-muted">This show your BMI(Body Mass Index) with a bar graph. The value is calculated from height and weigh records.</p>
+        </div>
+        <!--/Second column-->
+
+        <!--Third column-->
+        <div class="col-lg-3 col-md-6">
+            <i class="fas fa-chart-pie fa-3x indigo-text"></i>
+
+            <p class="font-weight-bold my-3">Radar chart</p>
+  
+            <p class="text-muted">This show your in the main components in blood with a radar chart. You can compare with the normal value in each components.</p>
+        </div>
+        <!--/Third column-->
+
+        <!--Fourth column-->
+        <div class="col-lg-3 col-md-6">
+            <i class="fas fa-users-cog fa-3x deep-purple-text"></i>
+
+            <p class="font-weight-bold my-3">Account</p>
+  
+            <p class="text-muted">Configure here about your account information.</p>
+        </div>
+        <!--/Fourth column-->
+
+      </div>
+      <!--/Grid row-->
+
+
+    </section>
+    <!--Section: Content-->
+
+
+  </div>
+  
+  <!-- Modal -->
+<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Connection</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to connect to another app? 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a href="https://api.us-south.apiconnect.appdomain.cloud/chocopon0899gmailcom-dev/sb/oauthprovider/oauth2/authorize?response_type=code&scope=scope1&client_id=a643943f-fd85-4801-9bd4-6c79d3e1d3c2">
+         <button type="button" class="btn btn-primary">Connect</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
