@@ -48,7 +48,13 @@ ViewApp.controller('LoginController', ['$scope', '$http', '$window','$httpParamS
     	        }).then(function successCallback(response){
     	        	$window.location.href = 'main.html';
     	        }, function errorCallback(response) {
-    	            console.log(response);
+    	        	var sts = response.status;
+
+    	        	if(sts == 400){
+      	        	   $scope.login_message = 'Password is wrong.';
+    	        	}else{
+         	           $scope.login_message = 'Your ID does not exist.';
+    	        	}
     	      });
     	};
     	
@@ -65,9 +71,9 @@ ViewApp.controller('LoginController', ['$scope', '$http', '$window','$httpParamS
       	          url: url,
       	          data: { username: $scope.mdusername, password: $scope.mdpassword }
       	        }).then(function successCallback(response){
-      	        	$scope.message = 'Registerd your new ID. Please login.';
+      	        	$scope.register_message = 'Registerd your new ID. Please login.';
       	        }, function errorCallback(response) {
-      	        	$scope.message = 'Error occurred. Please check your input.';
+      	        	$scope.register_message = 'Error occurred. Please check your input.';
       	        });
       	};
 

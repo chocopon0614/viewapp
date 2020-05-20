@@ -38,6 +38,9 @@ public class resources {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED) 
 	public Response Login(@FormParam("username") final String UserName, 
 			@FormParam("password") final String PassWord) {
+		
+		String hash_password = hashutil.getSHA256(PassWord);
+
 
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("ViewApp");
 		EntityManager em = emf.createEntityManager();
@@ -48,7 +51,7 @@ public class resources {
 		
 		if (!(UserObj == null || UserObj.size() == 0)) {
 			String DbPass = UserObj.get(0).getPassword();
-			if (PassWord.equals(DbPass)) {
+			if (hash_password.equals(DbPass)) {
 
 				Response response = Response.ok().build();
 			    return response;
