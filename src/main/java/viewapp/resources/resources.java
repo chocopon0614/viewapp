@@ -26,9 +26,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import viewapp.entity.userinfo;
 import viewapp.util.sslutil;
 
@@ -70,7 +67,7 @@ public class resources {
 
 	@POST
 	@Path("/token")
-	public Response oauthreturn(@FormParam("clientid") final String clientid,
+	public Response oauthtoken(@FormParam("clientid") final String clientid,
 			@FormParam("authcode") final String authcode) throws Exception {
 		if (!authcode.isEmpty()) {
 			
@@ -84,7 +81,7 @@ public class resources {
 			
 			MultivaluedHashMap<String, String> formParams = new MultivaluedHashMap<>();
 		        formParams.putSingle("grant_type", "authorization_code");
-		        formParams.putSingle("client_id", "a643943f-fd85-4801-9bd4-6c79d3e1d3c2");
+		        formParams.putSingle("client_id", clientid);
 		        formParams.putSingle("code", authcode);
 
 			try {
@@ -96,27 +93,8 @@ public class resources {
 				
 				String res_token = response_token.readEntity(String.class);
 
-				ObjectMapper mapper = new ObjectMapper();
-				JsonNode root = mapper.readTree(res_token);
-					
-				String token = root.get("access_token").asText();
-				Client client_api = ClientBuilder.newBuilder().sslContext(sslContext).hostnameVerifier(hostnameVerifier).build();
-
-				MultivaluedMap<String, Object> headers_api = new MultivaluedHashMap<>();
-				headers_api.putSingle("X-IBM-Client-Id", "a643943f-fd85-4801-9bd4-6c79d3e1d3c2");
-				headers_api.putSingle("Authorization", "Bearer "+ token);
-				headers_api.putSingle("accept", "application/json");
-				headers_api.putSingle("content-type", "application/x-www-form-urlencoded");
-
-				Response response_api = 
-						  client_api.target("https://api.us-south.apiconnect.appdomain.cloud")
-						        .path("/chocopon0899gmailcom-dev/sb/openapi/bodyinformation").request()
-						        .headers(headers_api).get();
-
-				String res_api = response_api.readEntity(String.class);
-				
 				ResponseBuilder rb = Response.ok().type(MediaType.APPLICATION_JSON_TYPE);
-				return rb.entity(res_api).build();
+				return rb.entity(res_token).build();
 	
 				
 			} catch (Exception e) {
@@ -131,13 +109,46 @@ public class resources {
 			}
 		}
 	
+
+	@POST
+	@Path("/resourse")
+	public Response oauthresource(@FormParam("clientid") final String clientid,
+			@FormParam("access_token") final String token) throws Exception {
+
+		try {
+			SSLContext sslContext = sslutil.createSSLContext();
+		    HostnameVerifier hostnameVerifier = sslutil.createHostNameVerifier();
+			Client client_api = ClientBuilder.newBuilder().sslContext(sslContext).hostnameVerifier(hostnameVerifier)
+					.build();
+
+			MultivaluedMap<String, Object> headers_api = new MultivaluedHashMap<>();
+			headers_api.putSingle("X-IBM-Client-Id", clientid);
+			headers_api.putSingle("Authorization", "Bearer " + token);
+			headers_api.putSingle("accept", "application/json");
+			headers_api.putSingle("content-type", "application/x-www-form-urlencoded");
+
+			Response response_api = client_api.target("https://api.us-south.apiconnect.appdomain.cloud")
+					.path("/chocopon0899gmailcom-dev/sb/openapi/bodyinformation").request().headers(headers_api).get();
+
+			String res_api = response_api.readEntity(String.class);
+
+			ResponseBuilder rb = Response.ok().type(MediaType.APPLICATION_JSON_TYPE);
+			return rb.entity(res_api).build();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+
+	}
+	
 	@GET
 	@Path("/code")
 	public Response oauthcode(@QueryParam("code") final String authcode) throws Exception {
 		if (!authcode.isEmpty()) {
 
 			ResponseBuilder rb = Response.status(Status.FOUND);
-			rb.header(HttpHeaders.LOCATION, "http://localhost:9080/ViewApp/main.html#/view?code=" + authcode );
+			rb.header(HttpHeaders.LOCATION, "/ViewApp/main.html#!/connect?code=" + authcode );
 			return rb.build();
 
 		} else {

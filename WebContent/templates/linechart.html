@@ -1,0 +1,59 @@
+ <div class="container my-5 py-5 z-depth-1">
+ 
+        <!--Section: Content-->
+        <section class="px-md-5 mx-md-5 text-center text-lg-left dark-grey-text">
+    
+          <!--Grid row-->
+          <div class="row">
+    
+            <!--Grid column-->
+            <div class="col-md-2 mb-4 mb-md-0">
+    
+              <p class="text-muted">Updated at </br> {{time1}}</p>
+    
+              <a class="btn btn-blue btn-md ml-0" role="button" ng-click="renew1()">Renew<i class="fa fa-external-link-alt ml-2"></i></a>
+
+        
+            </div>
+            <!--Grid column-->
+    
+            <!--Grid column-->
+            <div class="col-md-10 mb-4 mb-md-0">
+    
+              <!--Image-->
+               <canvas id="base" class="chart chart-line"
+                 chart-data="data" chart-labels="labels" chart-options ="options"
+                 chart-dataset-override="datasetOverride" >
+              </canvas> 			
+              
+              </br>
+ 
+            </div>
+            
+
+            <div class="col-md-2 mb-4 mb-md-0">
+    
+              <p class="text-muted">Updated at </br> {{time2}}</p>
+    
+              <a class="btn btn-green btn-md ml-0" role="button" ng-click="renew2()">Renew<i class="fa fa-external-link-alt ml-2"></i></a>
+    
+            </div>
+
+             <div class="col-md-10 mb-4 mb-md-0">
+    
+              <!--Image-->
+                 <canvas id="base2" class="chart chart-line"
+                   chart-data="data2" chart-labels="labels2" chart-options ="options2"
+                   chart-dataset-override="datasetOverride2" >
+                </canvas> 			
+ 
+             </div>
+    
+          </div>
+    
+    
+        </section>
+        <!--Section: Content-->
+    
+    
+ </div>
