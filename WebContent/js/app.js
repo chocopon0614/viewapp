@@ -3,10 +3,12 @@ var ViewApp = angular.module('ViewApp', ['ngRoute', 'chart.js']);
 ViewApp.config(['$routeProvider', function($routeProvider){
     $routeProvider
     .when('/', {
-      templateUrl: 'templates/menu.html'
+      templateUrl: 'templates/menu.html',
+      controller: 'MenuController'
     })
     .when('/menu', {
-      templateUrl: 'templates/menu.html'
+      templateUrl: 'templates/menu.html',
+      controller: 'MenuController'
     })
     .when('/connect', {
       templateUrl: 'templates/connect.html',
@@ -20,6 +22,9 @@ ViewApp.config(['$routeProvider', function($routeProvider){
       templateUrl: 'templates/barchart.html',
       controller: 'BarController'
     })
+    .when('/error', {
+      templateUrl: 'templates/error.html'
+    })
     .otherwise({
       redirectTo: '/'
     });
@@ -32,6 +37,8 @@ ViewApp.controller('LoginController', ['$scope', '$http', '$window','$httpParamS
 	   $scope.username = null;
 	   $scope.mdusername = null;
 	   $scope.mdemail = null;
+	   
+	   sessionStorage.removeItem('jwt');
 	
        $scope.submit = function(){
     	  var method = "POST";	
@@ -46,6 +53,10 @@ ViewApp.controller('LoginController', ['$scope', '$http', '$window','$httpParamS
     	          url: url,
     	          data: { username: $scope.username, password: $scope.password }
     	        }).then(function successCallback(response){
+    	        	var resdata = response.data;
+    	        	var jwt = resdata.JWT;
+    	        	sessionStorage.setItem('jwt', jwt);
+    	        	
     	        	$window.location.href = 'main.html';
     	        }, function errorCallback(response) {
     	        	var sts = response.status;
@@ -80,13 +91,12 @@ ViewApp.controller('LoginController', ['$scope', '$http', '$window','$httpParamS
     }]);
 
 
-ViewApp.controller('ConnectController', ['$http', '$location','$httpParamSerializerJQLike',
+ViewApp.controller('MenuController', ['$http', '$location','$httpParamSerializerJQLike',
 	function( $http, $location, $httpParamSerializerJQLike){
-	var clientid = 'a643943f-fd85-4801-9bd4-6c79d3e1d3c2';
-	var authcode =$location.search()["code"];
 	
 	var method = "POST";	
-	var url = 'api/resources/token';	
+	var url = 'api/resources/check';	
+	var jwt = sessionStorage.getItem('jwt');
 
 	
 	$http({
@@ -96,7 +106,34 @@ ViewApp.controller('ConnectController', ['$http', '$location','$httpParamSeriali
           },
           transformRequest: $httpParamSerializerJQLike,
           url: url,
-          data: { clientid: clientid, authcode: authcode}
+          data: { jwt: jwt}
+        }).then(function successCallback(response){
+	    }, function errorCallback(response) {
+   	        $location.path('/error');
+     })  
+    
+   }]);
+
+
+
+ViewApp.controller('ConnectController', ['$http', '$location','$httpParamSerializerJQLike',
+	function( $http, $location, $httpParamSerializerJQLike){
+	var clientid = 'a643943f-fd85-4801-9bd4-6c79d3e1d3c2';
+	var authcode =$location.search()["code"];
+	
+	var method = "POST";	
+	var url = 'api/resources/token';	
+	var jwt = sessionStorage.getItem('jwt');
+
+	
+	$http({
+          method: method,
+          headers : {
+              'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8'
+          },
+          transformRequest: $httpParamSerializerJQLike,
+          url: url,
+          data: { clientid: clientid, authcode: authcode, jwt: jwt}
         }).then(function successCallback(response){
         	var resdata = response.data;
         	var token = resdata.access_token;
@@ -116,6 +153,7 @@ ViewApp.controller('LineController', ['$scope', '$http', '$location', '$httpPara
 
 	  var clientid = 'a643943f-fd85-4801-9bd4-6c79d3e1d3c2';
 	  var token = localStorage.getItem('access_token');
+	  var jwt = sessionStorage.getItem('jwt');
 
 	  getinfo1(clientid, token);
 	  getinfo2(clientid, token);
@@ -137,7 +175,7 @@ ViewApp.controller('LineController', ['$scope', '$http', '$location', '$httpPara
 		       },
 		       transformRequest: $httpParamSerializerJQLike,
 		       url: url,
-		       data: { clientid: clientid, access_token: token}
+		       data: { clientid: clientid, access_token: token,  jwt: jwt}
 		     }).then(function successCallback(response){
 
 		          resdata = response.data;
@@ -172,6 +210,8 @@ ViewApp.controller('LineController', ['$scope', '$http', '$location', '$httpPara
 			      var date = new Date();
 			      $scope.time1 = date.toLocaleString('en-GB');
 			      
+   	        }, function errorCallback(response) {
+   	        $location.path('/error');
 		  })
 		};
 
@@ -184,7 +224,7 @@ ViewApp.controller('LineController', ['$scope', '$http', '$location', '$httpPara
 		       },
 		       transformRequest: $httpParamSerializerJQLike,
 		       url: url,
-		       data: { clientid: clientid, access_token: token}
+		       data: { clientid: clientid, access_token: token, jwt: jwt}
 		     }).then(function successCallback(response){
 
 		         resdata = response.data;
@@ -217,6 +257,9 @@ ViewApp.controller('LineController', ['$scope', '$http', '$location', '$httpPara
 
 			     var date = new Date();
 			     $scope.time2 = date.toLocaleString('en-GB');
+
+		     }, function errorCallback(response) {
+	   	   	        $location.path('/error');
 			      
 		      })
 		 };
@@ -231,6 +274,7 @@ ViewApp.controller('BarController', ['$scope', '$http', '$location', '$httpParam
 
 	  var clientid = 'a643943f-fd85-4801-9bd4-6c79d3e1d3c2';
 	  var token = localStorage.getItem('access_token');
+	  var jwt = sessionStorage.getItem('jwt');
 
 	  getinfo3(clientid, token);
 	  
@@ -248,7 +292,7 @@ ViewApp.controller('BarController', ['$scope', '$http', '$location', '$httpParam
 			       },
 			       transformRequest: $httpParamSerializerJQLike,
 			       url: url,
-			       data: { clientid: clientid, access_token: token}
+			       data: { clientid: clientid, access_token: token, jwt: jwt}
 			     }).then(function successCallback(response){
 
 			        resdata = response.data;
@@ -284,6 +328,8 @@ ViewApp.controller('BarController', ['$scope', '$http', '$location', '$httpParam
 				    var date = new Date();
 				    $scope.time3 = date.toLocaleString('en-GB');
 
+			     }, function errorCallback(response) {
+		   	   	     $location.path('/error');
 				      
 			  })
 	  };
