@@ -27,6 +27,8 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
 import viewapp.entity.userinfo;
+import viewapp.util.hashutil;
+import viewapp.util.jwtutil;
 import viewapp.util.sslutil;
 
 @Path("/resources")
@@ -37,6 +39,9 @@ public class resources {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED) 
 	public Response Login(@FormParam("username") final String UserName, 
 			@FormParam("password") final String PassWord) {
+		
+		String hash_password = hashutil.getSHA256(PassWord);
+
 
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("ViewApp");
 		EntityManager em = emf.createEntityManager();
@@ -47,10 +52,13 @@ public class resources {
 		
 		if (!(UserObj == null || UserObj.size() == 0)) {
 			String DbPass = UserObj.get(0).getPassword();
-			if (PassWord.equals(DbPass)) {
+			if (hash_password.equals(DbPass)) {
+				
+				String jwttoken = jwtutil.createJWT();
+				String res = "{\"JWT\" : \"" + jwttoken + "\" }";
 
-				Response response = Response.ok().build();
-			    return response;
+			    ResponseBuilder rb = Response.ok().type(MediaType.APPLICATION_JSON_TYPE);
+				return rb.entity(res).build();
 				
 			} else {
 
@@ -66,9 +74,22 @@ public class resources {
 	  }
 
 	@POST
+	@Path("/check")
+	public Response check(@FormParam("jwt") final String jwt) {
+
+		if (jwtutil.varifyJWT(jwt)) {
+			return Response.ok().build();
+		} else {
+			return Response.status(500).build();
+		}
+	}
+
+	@POST
 	@Path("/token")
 	public Response oauthtoken(@FormParam("clientid") final String clientid,
-			@FormParam("authcode") final String authcode) throws Exception {
+			@FormParam("authcode") final String authcode, @FormParam("jwt") final String jwt)
+					throws Exception {
+
 		if (!authcode.isEmpty()) {
 			
 			SSLContext sslContext = sslutil.createSSLContext();
@@ -113,9 +134,13 @@ public class resources {
 	@POST
 	@Path("/resourse")
 	public Response oauthresource(@FormParam("clientid") final String clientid,
-			@FormParam("access_token") final String token) throws Exception {
+			@FormParam("access_token") final String token, @FormParam("jwt") final String jwt)
+					throws Exception {
 
 		try {
+
+			if(!jwtutil.varifyJWT(jwt)) throw new Exception();
+
 			SSLContext sslContext = sslutil.createSSLContext();
 		    HostnameVerifier hostnameVerifier = sslutil.createHostNameVerifier();
 			Client client_api = ClientBuilder.newBuilder().sslContext(sslContext).hostnameVerifier(hostnameVerifier)
@@ -136,8 +161,9 @@ public class resources {
 			return rb.entity(res_api).build();
 
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
+
+			Response response = Response.status(500).build();
+		    return response;
 		}
 
 	}
@@ -162,6 +188,8 @@ public class resources {
 	@Path("/register")
 	public Response register(@FormParam("username") final String username,
 			@FormParam("password") final String password) throws Exception {
+		
+		String hash_password = hashutil.getSHA256(password);
 
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("ViewApp");
 		EntityManager em = emf.createEntityManager();
@@ -173,7 +201,7 @@ public class resources {
 
 	      userinfo userinfo = new userinfo();
 	      userinfo.setUsername(username);
-	      userinfo.setPassword(password);
+	      userinfo.setPassword(hash_password);
 	      userinfo.setCreateTime(new Timestamp(System.currentTimeMillis()));
 	      userinfo.setModifiedTime(new Timestamp(System.currentTimeMillis()));
 
