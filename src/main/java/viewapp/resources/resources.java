@@ -134,7 +134,8 @@ public class resources {
 	@POST
 	@Path("/resourse")
 	public Response oauthresource(@FormParam("clientid") final String clientid,
-			@FormParam("access_token") final String token, @FormParam("jwt") final String jwt)
+			@FormParam("access_token") final String token, @FormParam("jwt") final String jwt, 
+			@FormParam("targetpath") final String targetpath)
 					throws Exception {
 
 		try {
@@ -153,7 +154,7 @@ public class resources {
 			headers_api.putSingle("content-type", "application/x-www-form-urlencoded");
 
 			Response response_api = client_api.target("https://api.us-south.apiconnect.appdomain.cloud")
-					.path("/chocopon0899gmailcom-dev/sb/openapi/bodyinformation").request().headers(headers_api).get();
+					.path(targetpath).request().headers(headers_api).get();
 
 			String res_api = response_api.readEntity(String.class);
 

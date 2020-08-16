@@ -1,4 +1,4 @@
-var ViewApp = angular.module('ViewApp', ['ngRoute', 'chart.js']);
+var ViewApp = angular.module('ViewApp', ['ngRoute']);
 
 ViewApp.config(['$routeProvider', function($routeProvider){
     $routeProvider
@@ -21,6 +21,10 @@ ViewApp.config(['$routeProvider', function($routeProvider){
     .when('/barchart', {
       templateUrl: 'templates/barchart.html',
       controller: 'BarController'
+    })
+    .when('/radarchart', {
+      templateUrl: 'templates/radarchart.html',
+      controller: 'RadarController'
     })
     .when('/error', {
       templateUrl: 'templates/error.html'
@@ -154,17 +158,9 @@ ViewApp.controller('LineController', ['$scope', '$http', '$location', '$httpPara
 	  var clientid = 'a643943f-fd85-4801-9bd4-6c79d3e1d3c2';
 	  var token = localStorage.getItem('access_token');
 	  var jwt = sessionStorage.getItem('jwt');
+	  var targetpath = '/chocopon0899gmailcom-dev/sb/openapi/bodyinformation';
 
 	  getinfo1(clientid, token);
-	  getinfo2(clientid, token);
-	  
-	  $scope.renew1 = function(){
-		  getinfo1(clientid, token);
-	  };
-
-	  $scope.renew2 = function(){
-		  getinfo2(clientid, token);
-	  };
 
 	  function getinfo1(clientid, token){
 		  
@@ -175,7 +171,7 @@ ViewApp.controller('LineController', ['$scope', '$http', '$location', '$httpPara
 		       },
 		       transformRequest: $httpParamSerializerJQLike,
 		       url: url,
-		       data: { clientid: clientid, access_token: token,  jwt: jwt}
+		       data: { clientid: clientid, access_token: token,  jwt: jwt,  targetpath: targetpath}
 		     }).then(function successCallback(response){
 
 		          resdata = response.data;
@@ -183,30 +179,63 @@ ViewApp.controller('LineController', ['$scope', '$http', '$location', '$httpPara
 		          var tmp = dataArray(resdata);
 			      var Labels = createLabels(tmp);
 			      var Data1 = createData1(tmp);
+				  var Data2 = createData2(tmp);
 
-				  $scope.labels = Labels;
-			      $scope.data = [Data1];
-			      
-			      $scope.datasetOverride = [{
-			    	  label: "Height",
-			          borderWidth: 3,
-			          backgroundColor: 'rgba(60, 160, 220, 0.3)',
-			          borderColor: 'rgba(60, 160, 220, 0.8)'
-			       }];
-			      
-			      $scope.options = {
-			    	      scales: {
-			    	        xAxes: [
-			    	          {
-			    	           ticks: {
-			    	              autoSkip: true,
-			    	              maxTicksLimit: 10
-			    	               }
-			    	          }
-			    	        ]
-			    	      }
-			       };
-			      
+			      var ctx = document.getElementById("myLine1");
+				  var myChart = new Chart(ctx, {
+				        type: 'line',
+				        data: {
+				            labels: Labels,
+				            datasets: [{
+				                label: 'Height',
+				                data: Data1,
+						        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+						        borderColor: 'rgba(75, 192, 192, 1)',
+				                borderWidth: 3
+				            }]
+				        },
+				        options: {
+					        maintainAspectRatio: true,
+				            scales: {
+				    	        xAxes: [
+				    	          {
+				    	           ticks: {
+				    	              autoSkip: true,
+				    	              maxTicksLimit: 10
+				    	               }
+				                }]
+				            }
+				        }
+				    });
+
+			      var ctx = document.getElementById("myLine2");
+				  var myChart = new Chart(ctx, {
+				        type: 'line',
+				        data: {
+				            labels: Labels,
+				            datasets: [{
+				                label: 'Weight',
+				                data: Data2,
+						        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+						        borderColor: 'rgba(153, 102, 255, 1)',
+				                borderWidth: 3
+				            }]
+				        },
+				        options: {
+					        maintainAspectRatio: true,
+				            scales: {
+				    	        xAxes: [
+				    	          {
+				    	           ticks: {
+				    	              autoSkip: true,
+				    	              maxTicksLimit: 10
+				    	               }
+				                }]
+				            }
+				        }
+				    });
+				  
+				  
 			      var date = new Date();
 			      $scope.time1 = date.toLocaleString('en-GB');
 			      
@@ -224,7 +253,7 @@ ViewApp.controller('LineController', ['$scope', '$http', '$location', '$httpPara
 		       },
 		       transformRequest: $httpParamSerializerJQLike,
 		       url: url,
-		       data: { clientid: clientid, access_token: token, jwt: jwt}
+		       data: { clientid: clientid, access_token: token, jwt: jwt , targetpath: targetpath}
 		     }).then(function successCallback(response){
 
 		         resdata = response.data;
@@ -252,7 +281,7 @@ ViewApp.controller('LineController', ['$scope', '$http', '$location', '$httpPara
 			    	               }
 			    	          }
 			    	        ]
-			    	      }
+			    	  }
 			     };
 
 			     var date = new Date();
@@ -275,6 +304,7 @@ ViewApp.controller('BarController', ['$scope', '$http', '$location', '$httpParam
 	  var clientid = 'a643943f-fd85-4801-9bd4-6c79d3e1d3c2';
 	  var token = localStorage.getItem('access_token');
 	  var jwt = sessionStorage.getItem('jwt');
+	  var targetpath = '/chocopon0899gmailcom-dev/sb/openapi/bodyinformation';
 
 	  getinfo3(clientid, token);
 	  
@@ -292,7 +322,7 @@ ViewApp.controller('BarController', ['$scope', '$http', '$location', '$httpParam
 			       },
 			       transformRequest: $httpParamSerializerJQLike,
 			       url: url,
-			       data: { clientid: clientid, access_token: token, jwt: jwt}
+			       data: { clientid: clientid, access_token: token, jwt: jwt, targetpath: targetpath}
 			     }).then(function successCallback(response){
 
 			        resdata = response.data;
@@ -301,32 +331,134 @@ ViewApp.controller('BarController', ['$scope', '$http', '$location', '$httpParam
 				    var Labels = createLabels(tmp);
 				    var Data3 = createData3(tmp);
 				      
-				    $scope.colors3 = ['#ff6384'];
-				    $scope.labels3 = Labels;
-				    $scope.data3 = [Data3];
-				      
-				    $scope.datasetOverride3 = [{
-				    	  label: "BMI",
-				          borderWidth: 1,
-				          type: 'bar'
-				    }];
-				    
-				     $scope.options3 = {
-				    	      scales: {
+				    var ctx = document.getElementById("myBar");
+				    var myChart = new Chart(ctx, {
+				        type: 'bar',
+				        data: {
+				            labels: Labels,
+				            datasets: [{
+				                label: 'BMI',
+				                data: Data3,
+				                backgroundColor: 'rgba(255, 206, 86, 0.2)',
+				                borderColor: 'rgba(255, 206, 86, 1)',
+				                borderWidth: 3
+				            }]
+				        },
+				        options: {
+					        maintainAspectRatio: false,
+				            scales: {
 				    	        xAxes: [
 				    	          {
 				    	           ticks: {
 				    	              autoSkip: true,
 				    	              maxTicksLimit: 10
 				    	               }
-				    	          }
-				    	        ]
-				    	      }
-				    };
-
+				                }]
+				            }
+				        }
+				    });
 				    
 				    var date = new Date();
 				    $scope.time3 = date.toLocaleString('en-GB');
+
+			     }, function errorCallback(response) {
+		   	   	     $location.path('/error');
+				      
+			  })
+	  };
+	  	  
+}]);
+
+ViewApp.controller('RadarController', ['$scope', '$http', '$location', '$httpParamSerializerJQLike', 
+	function($scope, $http, $location, $httpParamSerializerJQLike){
+
+	  var method = "POST";	
+	  var url = 'api/resources/resourse';	
+
+	  var clientid = 'a643943f-fd85-4801-9bd4-6c79d3e1d3c2';
+	  var token = localStorage.getItem('access_token');
+	  var jwt = sessionStorage.getItem('jwt');
+	  var targetpath = '/chocopon0899gmailcom-dev/sb/openapi/bloodinformation';
+
+	  getinfo4(clientid, token);
+	  
+
+	function getinfo4(clientid, token){
+			  
+				$http({
+			       method: method,
+			       headers : {
+			           'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8'
+			       },
+			       transformRequest: $httpParamSerializerJQLike,
+			       url: url,
+			       data: { clientid: clientid, access_token: token, jwt: jwt,targetpath: targetpath}
+			     }).then(function successCallback(response){
+
+			        resdata = response.data;
+
+			        var GTP = resdata[0].gtp;
+			        var HDL = resdata[0].hdl;
+			        var LDL = resdata[0].ldl;
+			        var TG = resdata[0].tg;
+			        var FPG = resdata[0].fpg;
+
+			        var ctx = document.getElementById("myRadar");
+			        var myChart = new Chart(ctx, {
+			            type: 'radar',
+			            data: {
+			                labels: ["GTP", "HDL", "LDL", "TG", "FPG"],
+			                datasets: [{
+			                    label: 'Your Data',
+			                    data: [GTP, HDL, LDL, TG, FPG ],
+					            borderColor: [
+					                'rgba(255, 99, 132, 1)',
+					            ],
+					            backgroundColor: [
+					                'rgba(255, 99, 132, 0.2)'
+					            ],
+			                    pointStyle: "circle",                 
+			                    pointRadius: 3,                       
+					            borderWidth: 3,
+			                    pointBorderColor: "rgba(255, 99, 132, 1)",              
+			                    pointBorderWidth: 2,                  
+			                    pointBackgroundColor: "rgba(255, 99, 132, 0.2)"  
+			                },{
+					        label: 'Standard Value',
+		                    data: [50, 79.5, 89.5, 89.5, 99 ],
+				            borderColor: [
+				                'rgba(54, 162, 235, 1)',
+				            ],
+				            backgroundColor: [
+				                'rgba(54, 162, 235, 0.2)',
+				            ],
+		                    pointStyle: "circle",                 
+		                    pointRadius: 3,                       
+				            borderWidth: 3,
+		                    pointBorderColor: "rgba(54, 162, 235, 1)",              
+		                    pointBorderWidth: 2,                  
+		                    pointBackgroundColor: "rgba(54, 162, 235, 0.2)"  }]
+			            },
+			            options: {
+					        maintainAspectRatio: false,
+					    	tooltips: {
+				                mode: 'point'
+				            },
+					        scale: {
+				               pointLabels: {      
+				                    fontSize: 15    
+				                },
+				                ticks: {
+					                 stepSize: 20,
+					                 min:10,
+					                 max:100
+					             }
+					        }
+			            }
+			        });			        
+
+			        var date = new Date();
+				    $scope.time4 = date.toLocaleString('en-GB');
 
 			     }, function errorCallback(response) {
 		   	   	     $location.path('/error');

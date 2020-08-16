@@ -22,7 +22,7 @@ function createLabels(data){
 	    
 	for (var row in data){
 	   var tmp	= new Date(data[row][0]);
-	   tmpLabels.push(tmp.toLocaleDateString('en-GB').slice(0,5));
+	   tmpLabels.push(tmp.toLocaleDateString('en-GB').slice(0,10));
     }
 	
 	return tmpLabels;
