@@ -236,7 +236,7 @@ ViewApp.controller('RadarController', ['$scope', '$http', '$location', '$httpPar
 			        var myChart = new Chart(ctx, {
 			            type: 'radar',
 			            data: {
-			                labels: ["GTP", "HDL", "LDL", "TG", "FPG"],
+			                labels: ["γ-GTP", "HDL", "LDL", "TG", "FPG"],
 			                datasets: [{
 			                    label: 'Your Data',
 			                    data: [GTP, HDL, LDL, TG, FPG ],
