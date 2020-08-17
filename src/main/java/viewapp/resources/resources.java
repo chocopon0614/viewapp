@@ -1,15 +1,7 @@
 package viewapp.resources;
 
-import java.sql.Timestamp;
-import java.util.List;
-
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -26,69 +18,15 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
-import viewapp.entity.userinfo;
-import viewapp.util.hashutil;
-import viewapp.util.jwtutil;
 import viewapp.util.sslutil;
 
 @Path("/resources")
 public class resources {
 
 	@POST
-	@Path("/login")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED) 
-	public Response Login(@FormParam("username") final String UserName, 
-			@FormParam("password") final String PassWord) {
-		
-		String hash_password = hashutil.getSHA256(PassWord);
-
-
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("ViewApp");
-		EntityManager em = emf.createEntityManager();
-		
-		List<userinfo> UserObj = em.createNamedQuery("userinfo.findbyusername",userinfo.class)
-				.setParameter(1, UserName)
-				.getResultList();
-		
-		if (!(UserObj == null || UserObj.size() == 0)) {
-			String DbPass = UserObj.get(0).getPassword();
-			if (hash_password.equals(DbPass)) {
-				
-				String jwttoken = jwtutil.createJWT();
-				String res = "{\"JWT\" : \"" + jwttoken + "\" }";
-
-			    ResponseBuilder rb = Response.ok().type(MediaType.APPLICATION_JSON_TYPE);
-				return rb.entity(res).build();
-				
-			} else {
-
-				Response response = Response.status(400).build();
-			    return response;
-
-			}
-				
-		}else {
-			Response response = Response.status(500).build();
-		    return response;
-		}
-	  }
-
-	@POST
-	@Path("/check")
-	public Response check(@FormParam("jwt") final String jwt) {
-
-		if (jwtutil.varifyJWT(jwt)) {
-			return Response.ok().build();
-		} else {
-			return Response.status(500).build();
-		}
-	}
-
-	@POST
 	@Path("/token")
 	public Response oauthtoken(@FormParam("clientid") final String clientid,
-			@FormParam("authcode") final String authcode, @FormParam("jwt") final String jwt)
-					throws Exception {
+			@FormParam("authcode") final String authcode) throws Exception {
 
 		if (!authcode.isEmpty()) {
 			
@@ -132,14 +70,11 @@ public class resources {
 	
 
 	@POST
-	@Path("/resourse")
+	@Path("/apis")
 	public Response oauthresource(@FormParam("clientid") final String clientid,
-			@FormParam("access_token") final String token, @FormParam("jwt") final String jwt)
-					throws Exception {
+			@FormParam("access_token") final String token, @FormParam("targetpath") final String targetpath) throws Exception {
 
 		try {
-
-			if(!jwtutil.varifyJWT(jwt)) throw new Exception();
 
 			SSLContext sslContext = sslutil.createSSLContext();
 		    HostnameVerifier hostnameVerifier = sslutil.createHostNameVerifier();
@@ -153,7 +88,7 @@ public class resources {
 			headers_api.putSingle("content-type", "application/x-www-form-urlencoded");
 
 			Response response_api = client_api.target("https://api.us-south.apiconnect.appdomain.cloud")
-					.path("/chocopon0899gmailcom-dev/sb/openapi/bodyinformation").request().headers(headers_api).get();
+					.path(targetpath).request().headers(headers_api).get();
 
 			String res_api = response_api.readEntity(String.class);
 
@@ -174,7 +109,7 @@ public class resources {
 		if (!authcode.isEmpty()) {
 
 			ResponseBuilder rb = Response.status(Status.FOUND);
-			rb.header(HttpHeaders.LOCATION, "/ViewApp/main.html#!/connect?code=" + authcode );
+			rb.header(HttpHeaders.LOCATION, "/ViewApp/index.html#!/connect?code=" + authcode );
 			return rb.build();
 
 		} else {
@@ -182,47 +117,6 @@ public class resources {
 			return response;
 
 		}
-	}
-
-	@POST
-	@Path("/register")
-	public Response register(@FormParam("username") final String username,
-			@FormParam("password") final String password) throws Exception {
-		
-		String hash_password = hashutil.getSHA256(password);
-
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("ViewApp");
-		EntityManager em = emf.createEntityManager();
-		EntityTransaction tx = null;
-		
-		try {
-	      tx = em.getTransaction();
-	      tx.begin();
-
-	      userinfo userinfo = new userinfo();
-	      userinfo.setUsername(username);
-	      userinfo.setPassword(hash_password);
-	      userinfo.setCreateTime(new Timestamp(System.currentTimeMillis()));
-	      userinfo.setModifiedTime(new Timestamp(System.currentTimeMillis()));
-
-	      em.persist(userinfo);
-	    
-	      tx.commit();
-
-		  Response response = Response.ok().build();
-		  return response;
-
-		}catch (RuntimeException e) {
-			if ( tx != null && tx.isActive() ) tx.rollback();
-
-			Response response = Response.status(500).build();
-			return response;
-
-			
-		} finally {
-			em.close();
-		}
-		
 	}
 	
  }
