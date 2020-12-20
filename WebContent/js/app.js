@@ -33,7 +33,7 @@ ViewApp.config(['$routeProvider', function($routeProvider){
 var url_apis = 'api/resources/apis';
 var url_token = 'api/resources/token';	
 
-var clientid = 'a643943f-fd85-4801-9bd4-6c79d3e1d3c2';
+var clientid = '67d06253-09e6-426e-b180-bdc98f90c2bf';
 var token = localStorage.getItem('access_token');
 
 var targetpath_body = '/chocopon0899gmailcom-dev/sb/openapi/bodyinformation';
