@@ -3,6 +3,8 @@
   <groupId>ViewApp</groupId>
   <artifactId>ViewApp</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+
 	<name>DataApp</name>
 	<url>http://maven.apache.org</url>
 
@@ -19,6 +21,14 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+            <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-war-plugin</artifactId>
+                  <version>3.1.0</version>
+                  <configuration>
+                    <warSourceDirectory>WebContent</warSourceDirectory>
+                  </configuration>
+            </plugin>
 		</plugins>
 	</build>
 
@@ -64,16 +74,6 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>2.10.0</version>
 		</dependency>
-		<dependency>
-			<groupId>org.eclipse.persistence</groupId>
-			<artifactId>eclipselink</artifactId>
-			<version>2.7.5</version>
-		</dependency>
-        <dependency>
-            <groupId>com.ibm.db2.jcc</groupId>
-            <artifactId>db2jcc</artifactId>
-            <version>db2jcc4</version>
-        </dependency>
         <dependency>
             <groupId>com.auth0</groupId>
              <artifactId>java-jwt</artifactId>
