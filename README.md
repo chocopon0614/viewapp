@@ -48,3 +48,4 @@ The application is running on AWS EC2.
 * Maven 
 * J2EE
 * JAX-RS
+* AngularJS
