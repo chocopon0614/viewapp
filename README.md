@@ -43,7 +43,8 @@ If you want to run by yourself, please build by maven install and run a created 
 The application is running on AWS EC2. 
 
 <br>
- 
+
+
 # Technologies
 * Maven 
 * J2EE
