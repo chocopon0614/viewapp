@@ -30,14 +30,14 @@ ViewApp.config(['$routeProvider', function($routeProvider){
 }]);
 
 
-var url_apis = 'api/resources/apis';
-var url_token = 'api/resources/token';	
+var url_apis = '/resources/apis';
+var url_token = '/resources/token';	
 
 var clientid = '67d06253-09e6-426e-b180-bdc98f90c2bf';
 var token = localStorage.getItem('access_token');
 
-var targetpath_body = '/chocopon0899gmailcom-dev/sb/openapi/bodyinformation';
-var targetpath_blood = '/chocopon0899gmailcom-dev/sb/openapi/bloodinformation';
+var targetpath_body = '/openapi/bodyinformation';
+var targetpath_blood = '/openapi/bloodinformation';
 
 
 ViewApp.controller('ConnectController', ['$http', '$location','$httpParamSerializerJQLike',
@@ -68,8 +68,6 @@ ViewApp.controller('ConnectController', ['$http', '$location','$httpParamSeriali
 
 ViewApp.controller('LineController', ['$scope', '$http', '$location', '$httpParamSerializerJQLike', 
 	function($scope, $http, $location, $httpParamSerializerJQLike){
-
-	  var targetpath = '/chocopon0899gmailcom-dev/sb/openapi/bodyinformation';
 
 	    $http({
 		       method: 'POST',
