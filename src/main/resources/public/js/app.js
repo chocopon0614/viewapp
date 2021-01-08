@@ -30,8 +30,8 @@ ViewApp.config(['$routeProvider', function($routeProvider){
 }]);
 
 
-var url_apis = '/resources/apis';
-var url_token = '/resources/token';	
+var url_apis = 'resources/apis';
+var url_token = 'resources/token';	
 
 var clientid = '67d06253-09e6-426e-b180-bdc98f90c2bf';
 var token = localStorage.getItem('access_token');

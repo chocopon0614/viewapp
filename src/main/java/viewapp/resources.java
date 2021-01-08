@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+@RestController
 @RequestMapping(value = "/resources", produces = MediaType.APPLICATION_JSON_VALUE)
 public class resources {
 
@@ -29,7 +31,7 @@ public class resources {
 		if (!authcode.isEmpty()) {
 
 			HttpHeaders headers = new HttpHeaders();
-			headers.add(HttpHeaders.LOCATION, "/#!/connect?code=" + authcode);
+			headers.add(HttpHeaders.LOCATION, "/ViewApp/#!/connect?code=" + authcode);
 			return new ResponseEntity<>(headers, HttpStatus.FOUND);
 
 		} else {
