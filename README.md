@@ -31,7 +31,7 @@ This can behave like a viewer using other application's data only.
 Please access to the below link.<br>
 
 
-<http://ec2-44-239-106-99.us-west-2.compute.amazonaws.com:8888/ViewApp/#!/>
+<https://chocopon-forest.com/ViewApp/#!/>
 
 <br>
 
