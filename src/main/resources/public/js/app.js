@@ -30,8 +30,8 @@ ViewApp.config(['$routeProvider', function($routeProvider) {
 }]);
 
 
-var url_userinfo = 'https://ec2-44-239-106-99.us-west-2.compute.amazonaws.com/dataapp/open/userinfo';
-var url_chartdata = 'https://ec2-44-239-106-99.us-west-2.compute.amazonaws.com/dataapp/open/chartdata';
+var url_userinfo = 'https://chocopon-forest.com/dataapp/open/userinfo';
+var url_chartdata = 'https://chocopon-forest.com/dataapp/open/chartdata';
 
 ViewApp.controller('ConnectController', ['$location', function($location) {
 
