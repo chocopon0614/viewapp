@@ -67,7 +67,7 @@ ViewApp.controller('LineController', ['$scope', '$http', '$location',
 			var Data2 = createData2(tmp);
 
 			var ctx = document.getElementById("myLine1");
-			var myChart = new Chart(ctx, {
+			new Chart(ctx, {
 				type: 'line',
 				data: {
 					labels: Labels,
@@ -94,7 +94,7 @@ ViewApp.controller('LineController', ['$scope', '$http', '$location',
 			});
 
 			var ctx = document.getElementById("myLine2");
-			var myChart = new Chart(ctx, {
+			new Chart(ctx, {
 				type: 'line',
 				data: {
 					labels: Labels,
@@ -124,7 +124,7 @@ ViewApp.controller('LineController', ['$scope', '$http', '$location',
 			var date = new Date();
 			$scope.time1 = date.toLocaleString('en-GB');
 
-		}, function errorCallback(response) {
+		}, function errorCallback() {
 			$location.path('/error');
 		});
 
@@ -153,7 +153,7 @@ ViewApp.controller('BarController', ['$scope', '$http', '$location',
 			var Data3 = createData3(tmp);
 
 			var ctx = document.getElementById("myBar");
-			var myChart = new Chart(ctx, {
+			new Chart(ctx, {
 				type: 'bar',
 				data: {
 					labels: Labels,
@@ -182,7 +182,7 @@ ViewApp.controller('BarController', ['$scope', '$http', '$location',
 			var date = new Date();
 			$scope.time3 = date.toLocaleString('en-GB');
 
-		}, function errorCallback(response) {
+		}, function errorCallback() {
 			$location.path('/error');
 
 		})
@@ -213,7 +213,7 @@ ViewApp.controller('RadarController', ['$scope', '$http', '$location',
 			var FPG = resdata[0].fpg;
 
 			var ctx = document.getElementById("myRadar");
-			var myChart = new Chart(ctx, {
+			new Chart(ctx, {
 				type: 'radar',
 				data: {
 					labels: ["γ-GTP", "HDL", "LDL", "TG", "FPG"],
@@ -270,7 +270,7 @@ ViewApp.controller('RadarController', ['$scope', '$http', '$location',
 			var date = new Date();
 			$scope.time4 = date.toLocaleString('en-GB');
 
-		}, function errorCallback(response) {
+		}, function errorCallback() {
 			$location.path('/error');
 
 		})
