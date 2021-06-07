@@ -17,7 +17,7 @@
       <div class="container-fluid">
 
         <!-- Brand -->
-        <a class="navbar-brand waves-effect" href="#!/menu">
+        <a class="navbar-brand waves-effect" href="#!/">
           <strong>HOME</strong>
         </a>
 
@@ -33,13 +33,13 @@
           <!-- Left -->
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link waves-effect" href="/viewapp/#!/linechart"><i class="fas fa-chart-line"></i>Line</a>
+              <a class="nav-link waves-effect" href="#!/linechart"><i class="fas fa-chart-line"></i>Line</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link waves-effect" href="/viewapp/#!/barchart"><i class="fas fa-chart-bar"></i>Bar</a>
+              <a class="nav-link waves-effect" href="#!/barchart"><i class="fas fa-chart-bar"></i>Bar</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link waves-effect" href="/viewapp/#!/radarchart"><i class="fas fa-star"></i>Radar</a>
+              <a class="nav-link waves-effect" href="#!/radarchart"><i class="fas fa-star"></i>Radar</a>
             </li>
           </ul>
         </div>
@@ -64,7 +64,7 @@
     
     <p class="text-center mx-auto mb-4 pb-2">This application have connected with another application.</p>
     
-    <a href ="/viewapp/#!/menu">
+    <a href ="#!/">
     <button type="button" class="btn btn-deep-purple btn-rounded">Return</button>
     </a>
 
@@ -79,12 +79,11 @@
  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
  
- <script type="text/javascript">
-     var tmp = window.location.hash.substring(1).split('&')[0];
-     var token = tmp.split('=')[1];
-     
-     localStorage.setItem('token', token);
-</script>
+  <script type="text/javascript">
+      var token = window.location.search.split('token=')[1];
+      localStorage.setItem('token', token);
+
+  </script>
  
  
 </body>
