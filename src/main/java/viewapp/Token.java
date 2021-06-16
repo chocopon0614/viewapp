@@ -31,6 +31,9 @@ public class Token {
 	@GetMapping("tokenrequest")
 	public ResponseEntity<String> tokenrequest(@RequestParam("code") final String code) throws JsonProcessingException {
 
+		if (code == null)
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+
 		try {
 
 			HttpHeaders headers = new HttpHeaders();

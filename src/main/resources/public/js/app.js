@@ -26,7 +26,6 @@ ViewApp.config(['$routeProvider', function($routeProvider) {
 }]);
 
 var url_userinfo = 'https://chocopon-forest.com/dataapp/open/userinfo';
-//var url_userinfo = 'http://localhost:8080/DataApp/open/userinfo';
 var url_chartdata = 'https://chocopon-forest.com/dataapp/open/chartdata';
 
 ViewApp.controller('LineController', ['$scope', '$http', '$location',
