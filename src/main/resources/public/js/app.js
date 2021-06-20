@@ -5,10 +5,6 @@ ViewApp.config(['$routeProvider', function($routeProvider) {
 		.when('/', {
 			templateUrl: 'templates/menu.html'
 		})
-		.when('/connect', {
-			templateUrl: 'templates/connect.html',
-			controller: 'ConnectController'
-		})
 		.when('/linechart', {
 			templateUrl: 'templates/linechart.html',
 			controller: 'LineController'
@@ -29,20 +25,8 @@ ViewApp.config(['$routeProvider', function($routeProvider) {
 		});
 }]);
 
-
 var url_userinfo = 'https://chocopon-forest.com/dataapp/open/userinfo';
 var url_chartdata = 'https://chocopon-forest.com/dataapp/open/chartdata';
-
-ViewApp.controller('ConnectController', ['$location', function($location) {
-
-	var tmp = $location.hash().split('&')[0];
-	var token = tmp.split('=')[1];
-
-	localStorage.setItem('token', token);
-
-}]);
-
-
 
 ViewApp.controller('LineController', ['$scope', '$http', '$location',
 	function($scope, $http, $location) {
@@ -54,7 +38,7 @@ ViewApp.controller('LineController', ['$scope', '$http', '$location',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
 				'Accept': 'application/json',
-				'Authorization': 'Bearer ' + token
+				'Token': token
 			},
 			url: url_userinfo
 		}).then(function successCallback(response) {
@@ -140,7 +124,7 @@ ViewApp.controller('BarController', ['$scope', '$http', '$location',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
 				'Accept': 'application/json',
-				'Authorization': 'Bearer ' + token
+				'Token': token
 			},
 			url: url_userinfo
 
@@ -199,7 +183,7 @@ ViewApp.controller('RadarController', ['$scope', '$http', '$location',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
 				'Accept': 'application/json',
-				'Authorization': 'Bearer ' + token
+				'Token': token
 			},
 			url: url_chartdata
 		}).then(function successCallback(response) {
