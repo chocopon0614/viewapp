@@ -29,10 +29,10 @@ public class Token {
 	public static final String URL = "https://api.au-syd.apiconnect.appdomain.cloud/chocopon0899gmailcom-dev/sb/oauthprovider/oauth2/token";
 
 	@GetMapping("tokenrequest")
-	public ResponseEntity<String> tokenrequest(@RequestParam("code") final String code,
-			@RequestParam("error") final String error) throws JsonProcessingException {
+	public ResponseEntity<String> tokenrequest(@RequestParam(name = "code", required = false) final String code,
+			@RequestParam(name = "error", required = false) final String error) throws JsonProcessingException {
 
-		if ("access_denied".equals(error))
+		if (error != null)
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 
 		try {
