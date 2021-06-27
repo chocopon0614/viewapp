@@ -33,7 +33,8 @@ public class Token {
 			@RequestParam(name = "error", required = false) final String error) throws JsonProcessingException {
 
 		if (error != null)
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+			return ResponseEntity.status(HttpStatus.FOUND)
+					.location(URI.create("https://viewapp.au-syd.mybluemix.net/#!/error")).build();
 
 		try {
 
