@@ -25,7 +25,7 @@ ViewApp.config(['$routeProvider', function($routeProvider) {
 		});
 }]);
 
-var url_userinfo = 'https://chocopon-forest.com/dataapp/open/userinfo';
+var url_bardata = 'https://chocopon-forest.com/dataapp/open/bardata';
 var url_chartdata = 'https://chocopon-forest.com/dataapp/open/chartdata';
 
 ViewApp.controller('LineController', ['$scope', '$http', '$location',
@@ -40,7 +40,7 @@ ViewApp.controller('LineController', ['$scope', '$http', '$location',
 				'Accept': 'application/json',
 				'Token': token
 			},
-			url: url_userinfo
+			url: url_bardata
 		}).then(function successCallback(response) {
 
 			resdata = response.data;
@@ -126,7 +126,7 @@ ViewApp.controller('BarController', ['$scope', '$http', '$location',
 				'Accept': 'application/json',
 				'Token': token
 			},
-			url: url_userinfo
+			url: url_bardata
 
 		}).then(function successCallback(response) {
 
