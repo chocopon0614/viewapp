@@ -190,11 +190,11 @@ ViewApp.controller('RadarController', ['$scope', '$http', '$location',
 
 			resdata = response.data;
 
-			var GTP = resdata[0].gtp;
-			var HDL = resdata[0].hdl;
-			var LDL = resdata[0].ldl;
-			var TG = resdata[0].tg;
-			var FPG = resdata[0].fpg;
+			var GTP = resdata.gtp;
+			var HDL = resdata.hdl;
+			var LDL = resdata.ldl;
+			var TG = resdata.tg;
+			var FPG = resdata.fpg;
 
 			var ctx = document.getElementById("myRadar");
 			new Chart(ctx, {
