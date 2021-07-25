@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -26,15 +25,16 @@ public class Token {
 
 	RestTemplate restTemplate = new RestTemplate();
 
-	public static final String URL = "https://api.au-syd.apiconnect.appdomain.cloud/chocopon0899gmailcom-dev/sb/oauthprovider/oauth2/token";
+	public static final String tokenUrl = "https://api.au-syd.apiconnect.appdomain.cloud/chocopon0899gmailcom-dev/sb/oauthprovider/oauth2/token";
+	public static final String sucessUrl = "https://viewapp.au-syd.mybluemix.net/connect.html?token=";
+	public static final String errorUrl = "https://viewapp.au-syd.mybluemix.net/#!/error";
 
 	@GetMapping("tokenrequest")
-	public ResponseEntity<String> tokenrequest(@RequestParam(name = "code", required = false) final String code,
-			@RequestParam(name = "error", required = false) final String error) throws JsonProcessingException {
+	public ResponseEntity<String> tokenRequest(@RequestParam(name = "code", required = false) final String code,
+			@RequestParam(name = "error", required = false) final String error) {
 
 		if (error != null)
-			return ResponseEntity.status(HttpStatus.FOUND)
-					.location(URI.create("https://viewapp.au-syd.mybluemix.net/#!/error")).build();
+			return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(errorUrl)).build();
 
 		try {
 
@@ -50,7 +50,7 @@ public class Token {
 
 			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
 
-			ResponseEntity<String> response = restTemplate.postForEntity(URL, entity, String.class);
+			ResponseEntity<String> response = restTemplate.postForEntity(tokenUrl, entity, String.class);
 
 			if (response.getStatusCode() == HttpStatus.OK) {
 				String res = response.getBody();
@@ -60,9 +60,7 @@ public class Token {
 
 				String token = root.get("access_token").asText();
 
-				return ResponseEntity.status(HttpStatus.FOUND)
-						.location(URI.create("https://viewapp.au-syd.mybluemix.net/connect.html?token=" + token))
-						.build();
+				return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(sucessUrl + token)).build();
 
 			} else {
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
