@@ -2,8 +2,6 @@ version: 2.1
 
 jobs:
   test:
-      machine: 
-        image: default
       steps:
         - checkout
         - restore_cache:
