@@ -40,6 +40,7 @@ jobs:
             name: "preparing"
             command: |
               curl -sL https://ibm.biz/idt-installer | bash
+              ibmcloud -v
 #              sudo apt-get update
               
 
