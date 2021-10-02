@@ -2,6 +2,8 @@ version: 2.1
 
 jobs:
   test:
+      machine: 
+        image: default
       steps:
         - checkout
         - restore_cache:
@@ -37,7 +39,7 @@ jobs:
         - run:
             name: "preparing"
             command: |
-              yum list installed
+              sudo apt-get update
               
 
 workflows:
