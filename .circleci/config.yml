@@ -39,7 +39,7 @@ jobs:
         - run:
             name: "preparing"
             command: |
-              apt-get update
+              yum list installed
               
 
 workflows:
