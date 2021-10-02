@@ -39,8 +39,8 @@ jobs:
         - run:
             name: "preparing"
             command: |
-              curl -sL https://ibm.biz/idt-installer | bash
-              ibmcloud -v
+              curl -sL https://raw.githubusercontent.com/IBM-Cloud/ibm-cloud-developer-tools/master/linux-installer/idt-installer | bash
+              ibmcloud dev help
 #              sudo apt-get update
               
 
