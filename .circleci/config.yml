@@ -39,7 +39,8 @@ jobs:
         - run:
             name: "preparing"
             command: |
-              sudo apt-get update
+              curl -sL https://ibm.biz/idt-installer | bash
+#              sudo apt-get update
               
 
 workflows:
