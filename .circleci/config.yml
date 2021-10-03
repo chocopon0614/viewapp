@@ -39,7 +39,8 @@ jobs:
             command: |
                tar -zxvf /home/circleci/project/ibmcloud/IBM_Cloud_CLI_2.1.1_amd64.tar.gz -C /home/circleci/project/ibmcloud
                /home/circleci/project/ibmcloud/Bluemix_CLI/install
-               ibmcloud dev help
+               ibmcloud login -u chocopon0899@gmail.com -p artemis0899
+               ibmcloud target --cf
 #               curl -k https://raw.githubusercontent.com/IBM-Cloud/ibm-cloud-developer-tools/master/linux-installer/idt-installer | bash
 #               sudo apt-get update 
 #               sudo apt-get install -y curl
