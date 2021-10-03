@@ -34,14 +34,15 @@ jobs:
         - image: circleci/python:3.6-jessie
       working_directory: ~/
       steps:
-        - attach_workspace:
-            at: '.'
+#        - attach_workspace:
+#            at: '.'
+        - checkout
         - run:
             name: "preparing"
             command: |
-               pwd
-               ls -ltr /
-#               sudo curl --insecure https://raw.githubusercontent.com/IBM-Cloud/ibm-cloud-developer-tools/master/linux-installer/idt-installer | bash
+               tar -zxvf /home/circleci/ibmcloud/IBM_Cloud_CLI_2.1.1_amd64.tar.gz
+               ls -ltr /home/circleci/ibmcloud
+               curl -k https://raw.githubusercontent.com/IBM-Cloud/ibm-cloud-developer-tools/master/linux-installer/idt-installer | bash
 #               sudo apt-get update 
 #               sudo apt-get install -y curl
 #               curl -V              
