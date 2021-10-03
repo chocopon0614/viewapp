@@ -39,8 +39,9 @@ jobs:
         - run:
             name: "preparing"
             command: |
-               ls -ltr /home/circleci
-               sudo curl --insecure https://raw.githubusercontent.com/IBM-Cloud/ibm-cloud-developer-tools/master/linux-installer/idt-installer | bash
+               pwd
+               ls -ltr /
+#               sudo curl --insecure https://raw.githubusercontent.com/IBM-Cloud/ibm-cloud-developer-tools/master/linux-installer/idt-installer | bash
 #               sudo apt-get update 
 #               sudo apt-get install -y curl
 #               curl -V              
