@@ -45,6 +45,7 @@ jobs:
                ibmcloud api https://api.au-syd.bluemix.net
                ibmcloud login -u chocopon0899@gmail.com -p artemis0899
                ibmcloud target --cf
+               ibmcloud cf install
         - run:
             name: "deploying"
             command: ibmcloud cf push viewapp -m 128M -p /home/circleci/target/ViewApp.war
