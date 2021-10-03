@@ -32,15 +32,16 @@ jobs:
   deploy:
       machine: 
         image: default
-      working_directory: ~/
+ #     working_directory: ~/
       steps:
-        - attach_workspace:
-            at: '.'
+#        - attach_workspace:
+#            at: '.'
         - run:
             name: "preparing"
             command: |
-              curl --insecure https://raw.githubusercontent.com/IBM-Cloud/ibm-cloud-developer-tools/master/linux-installer/idt-installer | bash
-              ibmcloud dev help
+               curl -V
+#              curl --insecure https://raw.githubusercontent.com/IBM-Cloud/ibm-cloud-developer-tools/master/linux-installer/idt-installer | bash
+#              ibmcloud dev help
 #              sudo apt-get update
               
 
