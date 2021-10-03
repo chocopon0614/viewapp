@@ -39,8 +39,8 @@ jobs:
         - run:
             name: "preparing"
             command: |
-               tar -zxvf /home/circleci/project/ibmcloud/IBM_Cloud_CLI_2.1.1_amd64.tar.gz -C /home/circleci/project/ibmcloud
-               /home/circleci/project/ibmcloud/Bluemix_CLI/install
+               tar -zxvf /home/circleci/ibmcloud/IBM_Cloud_CLI_2.1.1_amd64.tar.gz -C /home/circleci/project/ibmcloud
+               /home/circleci/ibmcloud/Bluemix_CLI/install
                ibmcloud api https://api.au-syd.bluemix.net
                ibmcloud login -u chocopon0899@gmail.com -p artemis0899
                ibmcloud target --cf
