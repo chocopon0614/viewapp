@@ -1,0 +1,62 @@
+version: 2.1
+
+jobs:
+  test:
+      machine: 
+        image: default
+      steps:
+        - checkout
+        - restore_cache:
+            key: circleci-java-maven-{{ checksum "pom.xml" }}
+        - run:
+            command: mvn clean install
+        - save_cache:
+            paths:
+              - ~/.m2
+            key: circleci-java-maven-{{ checksum "pom.xml" }}
+        - persist_to_workspace:
+            root: '.'
+            paths:
+              - target
+              - ibmcloud
+        - run:
+            name: Save test results
+            command: |
+              mkdir -p ~/test-results/junit/
+              find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/junit/ \;
+            when: always
+        - store_test_results:
+            path: ~/test-results
+        - store_artifacts:
+            path: ~/test-results/junit
+
+  deploy:
+      machine: 
+        image: default
+      working_directory: ~/
+      steps:
+        - attach_workspace:
+            at: '.'
+        - run:
+            name: "preparing"
+            command: |
+               tar -zxvf /home/circleci/ibmcloud/IBM_Cloud_CLI_2.1.1_amd64.tar.gz -C /home/circleci/ibmcloud
+               /home/circleci/ibmcloud/Bluemix_CLI/install
+               ibmcloud api https://api.au-syd.bluemix.net
+               ibmcloud login -u chocopon0899@gmail.com -p artemis0899
+               ibmcloud target --cf
+               ibmcloud cf install
+        - run:
+            name: "deploying"
+            command: ibmcloud cf push viewapp -m 128M -p /home/circleci/target/ViewApp.war
+              
+workflows:
+  test-deploy:
+    jobs:
+      - test
+      - deploy:
+            requires:
+                - test
+            filters:
+                branches:
+                  only: master
