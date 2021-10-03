@@ -40,9 +40,7 @@ jobs:
         - run:
             name: "preparing"
             command: |
-               pwd
-               ls -ltr
-               tar -zxvf /home/circleci/ibmcloud/IBM_Cloud_CLI_2.1.1_amd64.tar.gz -C /home/circleci/project/ibmcloud
+               tar -zxvf /home/circleci/ibmcloud/IBM_Cloud_CLI_2.1.1_amd64.tar.gz -C /home/circleci/ibmcloud
                /home/circleci/ibmcloud/Bluemix_CLI/install
                ibmcloud api https://api.au-syd.bluemix.net
                ibmcloud login -u chocopon0899@gmail.com -p artemis0899
@@ -51,7 +49,6 @@ jobs:
             name: "deploying"
             command: ibmcloud cf push viewapp -m 128M -p /home/circleci/target/ViewApp.war
               
-
 workflows:
   test-deploy:
     jobs:
