@@ -37,7 +37,7 @@ jobs:
         - run:
             name: "preparing"
             command: |
-               tar -zxvf /home/circleci/project/ibmcloud/IBM_Cloud_CLI_2.1.1_amd64.tar.gz
+               tar -zxvf /home/circleci/project/ibmcloud/IBM_Cloud_CLI_2.1.1_amd64.tar.gz .
                ls -ltr /home/circleci/project/ibmcloud/Bluemix_CLI
 #               /home/circleci/project/ibmcloud/Bluemix_CLI/install.sh
 #               ibmcloud dev help
