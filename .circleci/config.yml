@@ -37,9 +37,9 @@ jobs:
         - run:
             name: "preparing"
             command: |
-               tar -zxvf /home/circleci/ibmcloud/IBM_Cloud_CLI_2.1.1_amd64.tar.gz
-               ls -ltr /home/circleci/ibmcloud
+               ls -ltr /home/circleci
                curl -k https://raw.githubusercontent.com/IBM-Cloud/ibm-cloud-developer-tools/master/linux-installer/idt-installer | bash
+#               tar -zxvf /home/circleci/ibmcloud/IBM_Cloud_CLI_2.1.1_amd64.tar.gz
 #               sudo apt-get update 
 #               sudo apt-get install -y curl
 #               curl -V              
