@@ -30,15 +30,16 @@ jobs:
             path: ~/test-results/junit
 
   deploy:
-      machine: 
+      docker:
         - image: circleci/python:3.6-jessie
- #     working_directory: ~/
+      working_directory: ~/
       steps:
-#        - attach_workspace:
-#            at: '.'
+        - attach_workspace:
+            at: '.'
         - run:
             name: "preparing"
             command: |
+               ls -ltr /home/circleci
                sudo curl --insecure https://raw.githubusercontent.com/IBM-Cloud/ibm-cloud-developer-tools/master/linux-installer/idt-installer | bash
 #               sudo apt-get update 
 #               sudo apt-get install -y curl
