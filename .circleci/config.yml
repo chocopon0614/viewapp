@@ -39,6 +39,7 @@ jobs:
         - run:
             name: "preparing"
             command: |
+               sudo apt-get update
                curl -V
 #              curl --insecure https://raw.githubusercontent.com/IBM-Cloud/ibm-cloud-developer-tools/master/linux-installer/idt-installer | bash
 #              ibmcloud dev help
