@@ -30,12 +30,9 @@ jobs:
             path: ~/test-results/junit
 
   deploy:
-      docker:
-        - image: circleci/python:3.6-jessie
-      working_directory: ~/
+      machine: 
+        image: default
       steps:
-#        - attach_workspace:
-#            at: '.'
         - checkout
         - run:
             name: "preparing"
