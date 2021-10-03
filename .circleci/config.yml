@@ -32,8 +32,10 @@ jobs:
   deploy:
       machine: 
         image: default
+      working_directory: ~/
       steps:
-        - checkout
+        - attach_workspace:
+            at: '.'
         - run:
             name: "preparing"
             command: |
@@ -42,22 +44,15 @@ jobs:
                ibmcloud api https://api.au-syd.bluemix.net
                ibmcloud login -u chocopon0899@gmail.com -p artemis0899
                ibmcloud target --cf
-#               curl -k https://raw.githubusercontent.com/IBM-Cloud/ibm-cloud-developer-tools/master/linux-installer/idt-installer | bash
-#               sudo apt-get update 
-#               sudo apt-get install -y curl
-#               curl -V              
-#               tar -zxvf /home/circleci/ibmcloud/IBM_Cloud_CLI_2.1.1_amd64.tar.gz
-#              sudo apt-get update
               
 
 workflows:
   test-deploy:
     jobs:
-      - deploy
-#      - test
-#      - deploy:
-#            requires:
-#                - test
-#           filters:
-#               branches:
-#                 only: master
+      - test
+      - deploy:
+            requires:
+                - test
+            filters:
+                branches:
+                  only: master
