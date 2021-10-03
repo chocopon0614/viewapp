@@ -31,7 +31,7 @@ jobs:
 
   deploy:
       machine: 
-        image: default
+        - image: circleci/python:3.6-jessie
  #     working_directory: ~/
       steps:
 #        - attach_workspace:
@@ -39,10 +39,10 @@ jobs:
         - run:
             name: "preparing"
             command: |
-               sudo apt-get update 
-               sudo apt-get install -y curl
-               curl -V              
                sudo curl --insecure https://raw.githubusercontent.com/IBM-Cloud/ibm-cloud-developer-tools/master/linux-installer/idt-installer | bash
+#               sudo apt-get update 
+#               sudo apt-get install -y curl
+#               curl -V              
 #               tar -zxvf /home/circleci/ibmcloud/IBM_Cloud_CLI_2.1.1_amd64.tar.gz
 #              ibmcloud dev help
 #              sudo apt-get update
