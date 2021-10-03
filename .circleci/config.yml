@@ -18,6 +18,7 @@ jobs:
             root: '.'
             paths:
               - target
+              - ibmcloud
         - run:
             name: Save test results
             command: |
