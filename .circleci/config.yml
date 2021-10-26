@@ -18,7 +18,7 @@ jobs:
             root: '.'
             paths:
               - target
-              - Bluemix_CLI
+              - ibmcloud
         - run:
             name: Save test results
             command: |
@@ -40,7 +40,8 @@ jobs:
         - run:
             name: "preparing"
             command: |
-               /home/circleci/Bluemix_CLI/install
+               tar -zxvf /home/circleci/ibmcloud/IBM_Cloud_CLI_2.1.1_amd64.tar.gz -C /home/circleci/ibmcloud
+               /home/circleci/ibmcloud/Bluemix_CLI/install
                ibmcloud api ${END_POINT}
                ibmcloud login -u ${USER_NAME} -p ${KEY}
                ibmcloud target --cf
