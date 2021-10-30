@@ -11,7 +11,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
 
-	<name>DataApp</name>
+	<name>ViewApp</name>
 	<url>http://maven.apache.org</url>
 
 	<build>
