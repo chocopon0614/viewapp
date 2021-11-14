@@ -3,6 +3,7 @@ package viewapp;
 import java.net.URI;
 import java.util.Collections;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,22 +20,23 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import viewapp.dto.Properties;
+
 @RestController
 @RequestMapping(value = "/token", produces = MediaType.APPLICATION_JSON_VALUE)
 public class Token {
+	@Autowired
+	private Properties prop;
 
-	RestTemplate restTemplate = new RestTemplate();
-
-	public static final String tokenUrl = "https://api.au-syd.apiconnect.appdomain.cloud/chocopon0899gmailcom-dev/sb/oauthprovider/oauth2/token";
-	public static final String sucessUrl = "https://viewapp.au-syd.mybluemix.net/connect.html?token=";
-	public static final String errorUrl = "https://viewapp.au-syd.mybluemix.net/#!/error";
+	@Autowired
+	private RestTemplate restTemplate;
 
 	@GetMapping("tokenrequest")
 	public ResponseEntity<String> tokenRequest(@RequestParam(name = "code", required = false) final String code,
 			@RequestParam(name = "error", required = false) final String error) {
 
 		if (error != null)
-			return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(errorUrl)).build();
+			return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(prop.getErrorUrl())).build();
 
 		try {
 
@@ -44,13 +46,13 @@ public class Token {
 			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
 			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-			map.add("client_id", "1886b5cd-d923-41db-aff7-2e841997e22b");
+			map.add("client_id", prop.getClientId());
 			map.add("code", code);
 			map.add("grant_type", "authorization_code");
 
 			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
 
-			ResponseEntity<String> response = restTemplate.postForEntity(tokenUrl, entity, String.class);
+			ResponseEntity<String> response = restTemplate.postForEntity(prop.getTokenUrl(), entity, String.class);
 
 			if (response.getStatusCode() == HttpStatus.OK) {
 				String res = response.getBody();
@@ -60,7 +62,7 @@ public class Token {
 
 				String token = root.get("access_token").asText();
 
-				return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(sucessUrl + token)).build();
+				return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(prop.getSuccessUrl() + token)).build();
 
 			} else {
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
