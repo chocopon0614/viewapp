@@ -48,7 +48,7 @@ jobs:
                ibmcloud cf install
         - run:
             name: "deploying"
-            command: ibmcloud cf push viewapp -m 32M -p /home/circleci/target/ViewApp.war
+            command: ibmcloud cf push viewapp -m 56M -p /home/circleci/target/ViewApp.war
               
 workflows:
   test-deploy:
