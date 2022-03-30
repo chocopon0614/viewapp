@@ -49,7 +49,7 @@ jobs:
               bash ./sg.sh
         - add_ssh_keys:
             fingerprints:
-              - '4c:3e:ae:dd:56:ea:20:2d:4d:ce:3c:3b:23:91:91:77'
+              - '3a:5c:be:07:a4:f0:df:4d:04:11:59:90:53:a4:58:55'
         - run: scp -o StrictHostKeyChecking=no /home/circleci/target/ViewApp.war ${USER_NAME}@${HOST_NAME}:~
         - run: ssh -o StrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} 'cp /home/chocopon1/ViewApp.war /opt/apache-tomcat/webapps | sudo systemctl restart tomcat'
         - run:
