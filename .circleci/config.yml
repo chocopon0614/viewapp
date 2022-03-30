@@ -5,8 +5,7 @@ orbs:
 
 jobs:
   test:
-      machine: 
-        image: default
+      machine: true 
       steps:
         - checkout
         - restore_cache:
