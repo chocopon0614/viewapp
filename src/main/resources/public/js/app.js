@@ -38,7 +38,7 @@ ViewApp.controller('LineController', ['$scope', '$http', '$location',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
 				'Accept': 'application/json',
-				'Token': token
+				'Authorization': 'Bearer ' + token
 			},
 			url: url_bardata
 		}).then(function successCallback(response) {
