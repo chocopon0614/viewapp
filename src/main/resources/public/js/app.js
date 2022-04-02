@@ -124,7 +124,7 @@ ViewApp.controller('BarController', ['$scope', '$http', '$location',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
 				'Accept': 'application/json',
-				'Token': token
+				'Authorization': 'Bearer ' + token
 			},
 			url: url_bardata
 
