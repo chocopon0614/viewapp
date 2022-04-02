@@ -36,7 +36,6 @@ ViewApp.controller('LineController', ['$scope', '$http', '$location',
 		$http({
 			method: 'GET',
 			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
 				'Accept': 'application/json',
 				'Authorization': 'Bearer ' + token
 			},
@@ -122,7 +121,6 @@ ViewApp.controller('BarController', ['$scope', '$http', '$location',
 		$http({
 			method: 'GET',
 			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
 				'Accept': 'application/json',
 				'Authorization': 'Bearer ' + token
 			},
