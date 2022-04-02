@@ -80,8 +80,15 @@
  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
  
   <script type="text/javascript">
-      var token = window.location.search.split('token=')[1];
-      localStorage.setItem('token', token);
+      var queryStr = window.location.hash.slice(1);
+      queries = {};
+
+      queryStr.split('&').forEach(function(queryStr) {
+         var queryArr = queryStr.split('=');
+         queries[queryArr[0]] = queryArr[1];
+      });
+
+      localStorage.setItem('token', queries['access_token']);
 
   </script>
  
