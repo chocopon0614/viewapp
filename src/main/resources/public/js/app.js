@@ -179,9 +179,8 @@ ViewApp.controller('RadarController', ['$scope', '$http', '$location',
 		$http({
 			method: 'GET',
 			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
 				'Accept': 'application/json',
-				'Token': token
+				'Authorization': 'Bearer ' + token
 			},
 			url: url_chartdata
 		}).then(function successCallback(response) {
